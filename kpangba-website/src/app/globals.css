@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-size: 16px;
+}
+
+
+body {
+  color:  #000;
+  background: #ffff;
+  width: 100%;
+  font-family: 'Manrope', monospace;
+}
+
+
+@media screen and (max-width: 768px) {
+  .zoom-out {
+      zoom: 70%;
+  }
+}
+
+
+.container {
+@apply  px-5 m-auto md:px-5 lg:px-10;    
+padding-right: 15px;
+padding-left: 15px;
+margin-right: auto;
+margin-left: auto;
+}
+@media (min-width: 768px) {
+.container {
+  width: 750px;
+}
+}
+@media (min-width: 992px) {
+.container {
+  width: 970px;
+}
+}
+@media (min-width: 1200px) {
+.container {
+  width: 1170px;
+}
+}
