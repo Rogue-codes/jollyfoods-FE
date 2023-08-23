@@ -12,6 +12,7 @@ import AvonC from "./AvonC.png";
 import RelianceHMO from "./RelianceHMO.png";
 import myCoverginus from "./MyCovergenius.png";
 import NigerianHealthInsurance from "./NigerianHeathInsurance.png"
+import Breakfast from "./Breakfast.png";
 export{
 Logo,
 HeroImage1,
@@ -26,5 +27,6 @@ AXA,
 AvonC,
 RelianceHMO,
 myCoverginus,
-NigerianHealthInsurance
+NigerianHealthInsurance,
+Breakfast
 }

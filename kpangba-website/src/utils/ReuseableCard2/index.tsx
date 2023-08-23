@@ -18,8 +18,8 @@ function ReuseableCard2() {
                     Create Account
                 </div>
             </div>
-            <div className='bg-[#FADB21] rounded-tl-2xl rounded-br-2xl absolute ml-[29.9rem] mt-[12.5rem]'>
-                <Image src={Meat} alt="" width={403} height={456} className='' />
+            <div className='bg-[#FADB21] pl-5 pt-4 rounded-tl-2xl rounded-br-2xl absolute ml-[29.9rem] mt-[15.1rem]'>
+                <Image src={Meat} alt="" width={403} height={456} className='rounded-lg' />
             </div>
         </div>
     )
