@@ -7,10 +7,15 @@ import { RestaurantPic } from '@/assets';
 import LunchList from '@/component/FoodMenuList/LunchList';
 import DinnerList from '@/component/FoodMenuList/DinnerList';
 import BreakFastList from '@/component/FoodMenuList/BreakFastList';
+import PaymentModal from '@/component/PaymentModal';
 
 function FoodMenu() {
-    const [menuList, setMenuList] = useState(0);
-
+    const [menuList, setMenuList] = useState<number>(0);
+    const [open, setOpen] = useState<boolean>(false)
+const openPaymentModal = () => {
+    setOpen(true);
+    console.log("clicked");
+}
     const SwitchTab = (index: number) => {
         setMenuList(index)
     }
@@ -59,8 +64,8 @@ function FoodMenu() {
                             Today’s Menu
                         </span>
                         <div className='border-b-2 relative cursor-pointer mb-6 border-[#E2E9E2] flex mt-8 items-center text-center justify-center gap-14'>
-                            <span className='text-[#302929] hover:border-b-2 hover:border-[#FADB21] p-2 font-semibold text-xl' onClick={() => SwitchTab(0)}>
-                                BreakFast
+                            <span className='text-[#302929] border-b-2 border-[#FADB21] p-2 font-semibold text-xl' onClick={() => SwitchTab(0)}>
+                                Breakast
                             </span>
                             <span className='text-[#302929] p-2 font-semibold text-xl hover:border-b-2 hover:border-[#FADB21]' onClick={() => SwitchTab(1)}>
                                 Lunch
@@ -95,10 +100,11 @@ function FoodMenu() {
                             <option value="">Dinner</option>
                         </select>
                         </div>
-                       <button className='bg-[#2B5F2B] w-[17rem] mt-8 text-white font-normla text-xl rounded-3xl p-4'>
+                       <button className='bg-[#2B5F2B] w-[17rem] mt-8 text-white font-normla text-xl rounded-3xl p-4' onClick={openPaymentModal}>
                         Continue to checkout
                         </button>
                     </div>
+                    {open && <PaymentModal open={open} close={() => setOpen(false)} /> }
                 </div>
             </div>
         </div>

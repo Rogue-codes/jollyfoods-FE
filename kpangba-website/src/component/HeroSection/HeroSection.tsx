@@ -41,7 +41,7 @@ function HeroSection() {
         <div className='flex flex-col items-center justify-center text-[56px] text-[#302929] font-extrabold w-[48rem] mt-8'>
           <span>Your meals, secure</span>
           <span >quality
-            <span className='bg-[#FCEA7D] rounded-xl px-2'>
+            <span className='bg-[#FCEA7D] ml-3 rounded-xl px-2'>
               healthcare service
             </span>
           </span>
@@ -74,15 +74,15 @@ function HeroSection() {
           />
         </div>
         <div className='w-[10rem]'>
-          <TimePicker 
-          // onChange={setTimeValue}
+          <TimePicker
+            // onChange={setTimeValue}
             value={timeValue}
-            disableClock={true} 
-            clearIcon={null}  
+            disableClock={true}
+            clearIcon={null}
             className="bg-white cursor-pointer items-center focus:outline-none w-full border  p-[10px] rounded-lg" />
         </div>
         <div className='w-[15rem]'>
-        <CustomSelect
+          <CustomSelect
             // hideDropDownIcon
             icon={<User size={19} variant='Linear' color='#302929' />}
             className="!w-full rounded-lg h-6"
@@ -92,9 +92,11 @@ function HeroSection() {
             value={loaction}
           />
         </div>
-        <div className='w-[10rem] bg-[#2B5F2B] px-4 py-3 rounded-2xl'>
-       <Link href="/reservation-result"><button className='text-white font-normal text-base'>Reserve</button></Link>  
-        </div>
+        <Link href="/reservation-result">
+          <div className='w-[10rem] bg-[#2B5F2B] px-4 py-3 rounded-2xl'>
+            <button className='text-white font-normal text-base'>Reserve</button>
+          </div>
+        </Link>
       </div>
       <div className='flex flex-row mt-[8rem] items-center justify-center gap-5'>
         <Image src={HeroImage1} alt="" width={248} height={217} className='rounded-xl' />
