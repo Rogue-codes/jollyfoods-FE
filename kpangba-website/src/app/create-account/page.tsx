@@ -18,7 +18,7 @@ function CreateAccount() {
                 <ArrowLeft />
               <Link href="/"><span className='font-bold text-2xl'>Go Back</span></Link>  
             </div>
-            <div className='flex flex-row w-[75.75] px-6 gap-10 h-[45.75] items-center text-center justify-center bg-white rounded-xl mt-11 border-2'>
+            <div className='flex flex-row w-[75.75] px-6 gap-10 h-[45.75] items-center text-center justify-center bg-white rounded-xl mt-11 border-2 shadow-xl'>
                 <div className='bg-white text-left w-1/2 px-8'>
                     <div className='flex w-[8.7rem] items-center mt-6 text-center justify-center mb-4'>
                         <div className='w-full'>
@@ -47,6 +47,18 @@ function CreateAccount() {
                                 Phone Number
                             </label>
                             <input className=" border border-[#E8EDE8] rounded-2xl w-full py-3 px-3 text-[#302929] leading-tight focus:outline-none text-base font-normal focus:border-[#2B5F2B]" type="text" placeholder="Phone Number" />
+                        </div>
+                        <div className='w-full text-left mb-3'>
+                            <label className="block text-[#302929] text-base font-normal mb-2">
+                                Password
+                            </label>
+                            <input className="border border-[#E8EDE8] rounded-2xl w-full py-3 px-3 text-[#302929] leading-tight focus:outline-none text-base font-normal focus:border-[#2B5F2B]" type="text" placeholder="Password" />
+                        </div>
+                        <div className='w-full text-left mb-3'>
+                            <label className="block text-[#302929] text-base font-normal mb-2">
+                                Confirm Password
+                            </label>
+                            <input className=" border border-[#E8EDE8] rounded-2xl w-full py-3 px-3 text-[#302929] leading-tight focus:outline-none text-base font-normal focus:border-[#2B5F2B]" type="text" placeholder="Confirm Password" />
                         </div>
                          <Select options={optionsArr} icon={<ArrowDown2/>} />
                         <div className='flex gap-4 my-3'>

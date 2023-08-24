@@ -30,6 +30,38 @@ export const Locations = [
      
   ];
 
+  export const locationResult = [
+    {
+      name: "Kpangba Ikeja",
+      subname: "Kfw Ikeja is located at Adekunle fajuyi way opposite FCMB bank,",
+      number: "4.0",
+      time: "8:00AM - 6:00PM",
+      amount: "N9,600 per person"
+    },
+    {
+      name: "Kpangba Ikeja",
+      subname: "Kfw Ikeja is located at Adekunle fajuyi way opposite FCMB bank,",
+      number: "4.0",
+      time: "8:00AM - 6:00PM",
+      amount: "N9,600 per person"
+    },
+    {
+      name: "Kpangba Ikeja",
+      subname: "Kfw Ikeja is located at Adekunle fajuyi way opposite FCMB bank,",
+      number: "4.0",
+      time: "8:00AM - 6:00PM",
+      amount: "N9,600 per person"
+    },
+    {
+      name: "Kpangba Ikeja",
+      subname: "Kfw Ikeja is located at Adekunle fajuyi way opposite FCMB bank,",
+      number: "4.0",
+      time: "8:00AM - 6:00PM",
+      amount: "N9,600 per person"
+    },
+     
+  ];
+
   export const royaltyData = [
     {
       name: "Kpangba Basic",
@@ -52,3 +84,24 @@ export const Locations = [
       reward3: "Option to include children"
     }, 
   ];
+
+ export const BreakfastList  = [
+  "Akara and Pap",
+   "Tea and Bead",
+   "Pancakes with Bacon",
+   "Fried Yam and Eggs"
+ ]
+
+ export const LunchList  = [
+  "Jollof Rice with Chicken",
+   "Chicken Salad",
+   "Special Spaghetti",
+   "Vegetable Soup and Fufu"
+ ]
+
+ export const DinnerList  = [
+  "Special Spaghetti",
+   "Yam Porridge",
+   "Fried Rice",
+   "Baked Potatoes and Fish"
+ ]

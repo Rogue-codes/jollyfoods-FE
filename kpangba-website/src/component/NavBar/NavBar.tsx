@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 export default function NavBar() {
     return (
-        <div className="p-2 flex justify-between fixed bg-white pt-6 w-full left-0 top-0 z-50">
+        <div className="px-16 py-2 flex justify-between fixed bg-white pt-6 w-full left-0 top-0 z-50">
             <div className="flex gap-3 items-center">
               <div className='w-full'>
                 <Image src={Logo} alt="kpangba Logo" width={40} height={40} />
