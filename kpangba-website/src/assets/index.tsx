@@ -14,6 +14,7 @@ import myCoverginus from "./MyCovergenius.png";
 import NigerianHealthInsurance from "./NigerianHeathInsurance.png"
 import Breakfast from "./Breakfast.png";
 import RestaurantPic from "./RestaurantPic.svg";
+import Paystack from "./Paystack.svg";
 export{
 Logo,
 HeroImage1,
@@ -30,5 +31,6 @@ RelianceHMO,
 myCoverginus,
 NigerianHealthInsurance,
 Breakfast,
-RestaurantPic
+RestaurantPic,
+Paystack 
 }

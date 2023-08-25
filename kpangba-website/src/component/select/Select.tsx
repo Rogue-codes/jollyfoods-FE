@@ -23,7 +23,7 @@ export default function Select({ options, icon, className, switchIcon = false }:
 
   return (
     <div
-      className={`flex relative gap-10 items-start justify-between border rounded-2xl p-3 bg-white border-[#E8EDE8] ${className}`}
+      className={`flex relative gap-2 items-start justify-start border rounded-2xl p-3 bg-white border-[#E8EDE8] ${className}`}
       onClick={() => setShowDropDown(true)}
       tabIndex={0}
       onBlur={() => setShowDropDown(false)}
@@ -32,10 +32,11 @@ export default function Select({ options, icon, className, switchIcon = false }:
         <>
           {icon}
           <input
-            className="text-[#302929] text-base font-normal focus:outline-none"
+            className="text-[#302929] text-base font-normal !focus:outline-none"
             value={searchVal}
             onChange={(e)=>setSearchVal(e.target.value)}
             placeholder={options[selected]}
+            style={{ outline: 'none' }}
           />
         </>
       ) : (

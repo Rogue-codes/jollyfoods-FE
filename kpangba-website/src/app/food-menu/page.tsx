@@ -8,14 +8,15 @@ import LunchList from '@/component/FoodMenuList/LunchList';
 import DinnerList from '@/component/FoodMenuList/DinnerList';
 import BreakFastList from '@/component/FoodMenuList/BreakFastList';
 import PaymentModal from '@/component/PaymentModal';
+import Backdrop from '@/widget/modal/Backdrop';
 
 function FoodMenu() {
     const [menuList, setMenuList] = useState<number>(0);
     const [open, setOpen] = useState<boolean>(false)
-const openPaymentModal = () => {
-    setOpen(true);
-    console.log("clicked");
-}
+    const openPaymentModal = () => {
+        setOpen(true);
+        console.log("clicked");
+    }
     const SwitchTab = (index: number) => {
         setMenuList(index)
     }
@@ -77,11 +78,11 @@ const openPaymentModal = () => {
                         <div className='absolute z-20'>{menuContent}</div>
                     </div>
                     <div className='Right w-[25rem] h-[20rem] pl-8 flex flex-col items-start text-start justify-start border border-[#E2E9E2] bg-white rounded-2xl'>
-                       <span className='font-semibold mt-10 text-xl text-[#302929]'>
+                        <span className='font-semibold mt-10 text-xl text-[#302929]'>
                             N9,600
-                        <span className='font-normal ml-3 text-base text-[#302929]'>
-                            per Buffets
-                        </span>
+                            <span className='font-normal ml-3 text-base text-[#302929]'>
+                                per Buffets
+                            </span>
                         </span>
                         <div className='flex mt-8 w-full items-start justify-start gap-32 text-start'>
                             <div className='font-normal gap-4 text-base text-[#302929] flex items-center justify-center text-center'>
@@ -94,19 +95,19 @@ const openPaymentModal = () => {
                             </div>
                         </div>
                         <div className='mt-8 w-[10rem]'>
-                        <select className='w-full rounded-lg p-2 bg-[#FEFAE1]'>
-                            <option value="">Breakfast</option>
-                            <option value="">Lunch</option>
-                            <option value="">Dinner</option>
-                        </select>
+                            <select className='w-full rounded-lg p-2 bg-[#FEFAE1]'>
+                                <option value="">Breakfast</option>
+                                <option value="">Lunch</option>
+                                <option value="">Dinner</option>
+                            </select>
                         </div>
-                       <button className='bg-[#2B5F2B] w-[17rem] mt-8 text-white font-normla text-xl rounded-3xl p-4' onClick={openPaymentModal}>
-                        Continue to checkout
+                        <button className='bg-[#2B5F2B] w-[17rem] mt-8 text-white font-normla text-xl rounded-3xl p-4 cursor-pointer' onClick={openPaymentModal}>
+                            Continue to checkout
                         </button>
                     </div>
-                    {open && <PaymentModal open={open} close={() => setOpen(false)} /> }
                 </div>
             </div>
+            {open && <PaymentModal open={open} close={() => setOpen(false)} />}
         </div>
     )
 }
