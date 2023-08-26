@@ -8,7 +8,6 @@ import LunchList from '@/component/FoodMenuList/LunchList';
 import DinnerList from '@/component/FoodMenuList/DinnerList';
 import BreakFastList from '@/component/FoodMenuList/BreakFastList';
 import Link from 'next/link';
-
 function FoodMenu() {
     const [menuList, setMenuList] = useState<number>(0);
     const SwitchTab = (index: number) => {
