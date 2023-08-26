@@ -61,7 +61,7 @@ function CreateAccount() {
                             </label>
                             <input className=" border border-[#E8EDE8] rounded-2xl w-full py-3 px-3 text-[#302929] leading-tight focus:outline-none text-base font-normal focus:border-[#2B5F2B]" type="text" placeholder="Confirm Password" />
                         </div>
-                        <Select options={optionsArr} icon={<ArrowDown2 />} />
+                        <Select options={optionsArr} icon={<ArrowDown2 className='ml-20' />} />
                         <div className='flex gap-4 my-3'>
                             <input
                                 type="checkbox"
@@ -72,7 +72,11 @@ function CreateAccount() {
                                 By clicking you agree to Kpangba terms and policies
                             </span>
                         </div>
-                        <button type="submit" className='bg-[#2B5F2B] mb-5 mt-3 text-[#ffff] w-full py-3 rounded-3xl font-normal text-base'>Create Account</button>
+                        <Link href="/verify-login">
+                            <button type="submit" className='bg-[#2B5F2B] mb-5 mt-3 text-[#ffff] w-full py-3 rounded-3xl font-normal text-base'>
+                                Create Account
+                            </button>
+                        </Link>
                     </form>
                 </div>
                 <div className='bg-[#2B5F2B] mr-4 pl-14 rounded-xl flex flex-col items-start text-start justify-start w-1/2'>

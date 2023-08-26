@@ -7,16 +7,10 @@ import { RestaurantPic } from '@/assets';
 import LunchList from '@/component/FoodMenuList/LunchList';
 import DinnerList from '@/component/FoodMenuList/DinnerList';
 import BreakFastList from '@/component/FoodMenuList/BreakFastList';
-import PaymentModal from '@/component/PaymentModal';
-import Backdrop from '@/widget/modal/Backdrop';
+import Link from 'next/link';
 
 function FoodMenu() {
     const [menuList, setMenuList] = useState<number>(0);
-    const [open, setOpen] = useState<boolean>(false)
-    const openPaymentModal = () => {
-        setOpen(true);
-        console.log("clicked");
-    }
     const SwitchTab = (index: number) => {
         setMenuList(index)
     }
@@ -101,13 +95,15 @@ function FoodMenu() {
                                 <option value="">Dinner</option>
                             </select>
                         </div>
-                        <button className='bg-[#2B5F2B] w-[17rem] mt-8 text-white font-normla text-xl rounded-3xl p-4 cursor-pointer' onClick={openPaymentModal}>
-                            Continue to checkout
-                        </button>
+                        <Link href="/create-account">
+                            <button className='bg-[#2B5F2B] w-[17rem] mt-8 text-white font-normla text-xl rounded-3xl py-3 px-4 cursor-pointer'>
+                                Continue to checkout
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </div>
-            {open && <PaymentModal open={open} close={() => setOpen(false)} />}
+
         </div>
     )
 }

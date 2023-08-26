@@ -36,9 +36,11 @@ function ResultCard({ text1, text2, img, number, icon, time, amount, icon2 }: co
                             {amount}
                         </span>
                     </div>
-                    <button className='bg-[#2B5F2B] px-7 text-base font-normal text-white rounded-2xl'>
-                        <Link href="/food-menu">continue</Link>
-                    </button>
+                    <Link href="/food-menu">
+                        <button className='bg-[#2B5F2B] py-4 px-5 text-base font-normal text-white rounded-2xl'>
+                            continue
+                        </button>
+                    </Link>
                 </div>
             </div>
         </div>

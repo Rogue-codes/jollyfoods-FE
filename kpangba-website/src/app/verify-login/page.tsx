@@ -1,15 +1,21 @@
+"use client"
 import { ArrowLeft } from 'iconsax-react'
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image';
 import { Breakfast, Logo } from '@/assets';
 import Link from 'next/link';
-import OtpInput from '@/component/OtpInput';
+import PaymentModal from '@/component/PaymentModal';
+// import OtpInput from '@/component/OtpInput';
 
 function VerifyLoginPage() {
-
+    const [open, setOpen] = useState<boolean>(false)
+    const openPaymentModal = () => {
+        setOpen(true);
+        console.log("clicked");
+    }
     return (
         <div className='flex flex-col bg-white w-full pt-6 px-32'>
-            <Link href="/">  <div className='flex flex-row mt-8 gap-8 items-center'>
+            <Link href="/create-account">  <div className='flex flex-row mt-8 gap-8 items-center'>
                 <ArrowLeft />
                 <span className='font-bold text-2xl'>Go Back</span>
             </div>
@@ -27,12 +33,18 @@ function VerifyLoginPage() {
                             Verify it's you
                         </span>
                         <span className='text-[#302929] mt-5 text-base font-normal'>
-                            Enter code sent to your e-mail
+                        Enter code sent to your e-mail and phone number
                         </span>
                     </div>
                     <form action="" className='mt-10'>
-                         <OtpInput      />
-                        <button type="submit" className='bg-[#2B5F2B] mb-5 mt-3 text-[#ffff] w-full py-3 rounded-3xl font-normal text-base'>Verify Code</button>
+                        {/* <OtpInput      /> */}
+                        <div className='flex gap-14 mt-12 items-start text-center justify-start'>
+                            <span className='text-[#2B5F2B] text-base font-normal cursor-pointer'>Resend code</span>
+                            <span className='text-[#302929] text-base font-normal'>00:60 secs</span>
+                        </div>
+                        <div className='bg-[#2B5F2B] flex items-center justify-center text-center mb-5 mt-24 text-[#ffff] w-full py-3 rounded-3xl font-normal text-base' onClick={openPaymentModal}>
+                            Verify Code
+                        </div>
                     </form>
                 </div>
                 <div className='bg-[#2B5F2B] mr-4 pl-14 rounded-xl flex flex-col items-start text-start justify-start w-1/2'>
@@ -51,6 +63,7 @@ function VerifyLoginPage() {
                     </div>
                 </div>
             </div>
+            {open && <PaymentModal open={open} close={() => setOpen(false)} />}
         </div>
     )
 }
