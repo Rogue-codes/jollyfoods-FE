@@ -86,7 +86,7 @@ function ReservationResult() {
                     </div>
                 </div>
             </div>
-            <div className='flex px-16 mt-2 gap-24 items-start text-start justify-start'>
+            <div className='flex px-16 mt-2 gap-24 items-start text-start justify-center'>
                 <div className='first flex flex-col gap-4 w-[9.6rem] '>
                     <span className='bg-[#FEF8D2] mt-5 mb-3 items-center text-center justify-center rounded-lg border border-[#D0B61B] w-14 py-3 px-2'>
                         Filter

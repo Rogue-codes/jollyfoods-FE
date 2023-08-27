@@ -46,3 +46,12 @@ margin-left: auto;
   width: 1170px;
 }
 }
+
+.hide_overflow::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+  }
+  .disabled{
+    opacity: .5;
+    cursor: not-allowed;
+  }
