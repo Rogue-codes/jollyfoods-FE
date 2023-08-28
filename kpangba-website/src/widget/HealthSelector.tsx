@@ -1,7 +1,12 @@
 import { ArrowDown2 } from "iconsax-react";
 import React, { useState } from "react";
 
-export default function HealthSelector() {
+interface HealthSelectorProps{
+  insurance: string;
+  setInsurance: React.Dispatch<React.SetStateAction<string>>
+  formik:any
+}
+export default function HealthSelector({setInsurance,insurance,formik}:HealthSelectorProps) {
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
   const healthArr = [
     "Nigerian Health Insurance",
@@ -10,19 +15,24 @@ export default function HealthSelector() {
     "MyConvergenius",
     "AXA",
   ];
+  const handleClick = (hmo:string) =>{
+    setInsurance(hmo)
+    formik.setFieldValue("healthcareServiceProvider", hmo);
+    setShowDropDown(false)
+  }
   return (
     <div
-      className="w-full relative h-full p-3 border border-black rounded-lg flex justify-between items-center"
+      className="w-full relative h-full p-3  rounded-lg flex justify-between items-center"
       onClick={() => setShowDropDown(!showDropDown)}
     >
-      <p>Health service provider</p>
+      <p className={`${!insurance && "text-sm"}`}>{insurance ? insurance : "Health service provider"}</p>
       <ArrowDown2 size={20} />
       {showDropDown && (
         <div className="absolute left-0 bg-white z-10 top-12 w-full py-3 border">
           {healthArr.map((hmo, index) => (
-            <p key={index} className="p-2 cursor-pointer hover:bg-red-500 ">
+            <div key={index} className="p-2 cursor-pointer !hover:bg-slate-500 " onClick={()=> handleClick(hmo)}>
               {hmo}
-            </p>
+            </div>
           ))}
         </div>
       )}

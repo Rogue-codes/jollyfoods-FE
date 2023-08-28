@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -8,50 +8,69 @@
   font-size: 16px;
 }
 
-
 body {
-  color:  #000;
+  color: #000;
   background: #ffff;
   width: 100%;
-  font-family: 'Manrope', monospace;
+  font-family: "Manrope", monospace;
 }
-
 
 @media screen and (max-width: 768px) {
   .zoom-out {
-      zoom: 70%;
+    zoom: 70%;
   }
 }
 
-
 .container {
-@apply  px-5 m-auto md:px-5 lg:px-10;    
-padding-right: 15px;
-padding-left: 15px;
-margin-right: auto;
-margin-left: auto;
+  @apply px-5 m-auto md:px-5 lg:px-10;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
 }
 @media (min-width: 768px) {
-.container {
-  width: 750px;
-}
+  .container {
+    width: 750px;
+  }
 }
 @media (min-width: 992px) {
-.container {
-  width: 970px;
-}
+  .container {
+    width: 970px;
+  }
 }
 @media (min-width: 1200px) {
-.container {
-  width: 1170px;
-}
+  .container {
+    width: 1170px;
+  }
 }
 
 .hide_overflow::-webkit-scrollbar {
   width: 0px;
   background: transparent;
-  }
-  .disabled{
-    opacity: .5;
-    cursor: not-allowed;
-  }
+}
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.otp-group {
+  display: flex;
+  width: 100%;
+  max-width: 360px;
+  column-gap: 10px;
+}
+
+.otp-input {
+  width: 100%;
+  height: 60px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 0;
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  line-height: 1;
+  color: #2B5F2B;
+}
+.otp-input:focus{
+  outline: 2px solid #2B5F2B;
+}

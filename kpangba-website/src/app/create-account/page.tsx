@@ -1,13 +1,14 @@
 "use client";
-import { ArrowDown2, ArrowLeft } from "iconsax-react";
+import { ArrowDown2, ArrowLeft, Js } from "iconsax-react";
 import React, { useState } from "react";
 import Image from "next/image";
 import { Breakfast, Logo } from "@/assets";
 import Link from "next/link";
-import CustomSelect, { OptionProps } from "@/widget/Select";
 import { FormikErrors, useFormik } from "formik";
 import ApiFetcher from "@/utils/api/ApiFetcher";
 import HealthSelector from "@/widget/HealthSelector";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 type UserRegistrationType = {
   name: string;
@@ -19,33 +20,13 @@ type UserRegistrationType = {
 };
 
 function CreateAccount() {
-  const optionsArr: OptionProps[] = [
-    {
-      label: "Nigerian Health Insurance",
-      value: "Nigerian Health Insurance",
-    },
-    {
-      label: "Reliance Health",
-      value: "Reliance Health",
-    },
-    {
-      label: "Avon",
-      value: "Avon",
-    },
-    {
-      label: "MyConvergenius",
-      value: "MyConvergenius",
-    },
-    {
-      label: "AXA",
-      value: "AXA",
-    },
-  ];
-
-  const [insurance, setInsurance] = useState<OptionProps | null>(null);
+  const router = useRouter()
+  const [insurance, setInsurance] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  console.log(insurance)
 
   const emailRegex = RegExp(/^\S+@\S+\.\S+$/);
+  const passwordRegex = RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/)
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -53,20 +34,28 @@ function CreateAccount() {
       password: "",
       confirmPassword: "",
       phoneNumber: "",
-      healthcareServiceProvider: insurance,
+      healthcareServiceProvider: "",
     },
     onSubmit: async (values) => {
+      const body = {...values, healthcareServiceProvider:insurance}
       setLoading(true);
       try {
-        const res = await ApiFetcher.post(`/auth/signup`, {
-          values,
+        const res = await ApiFetcher.post(`user/register`, {
+          name: body.name,
+          email:body.email,
+          phoneNumber:body.phoneNumber,
+          healthcareServiceProvider:body.healthcareServiceProvider,
+          password:body.password,
+          confirmPassword: body.confirmPassword
         });
         setLoading(false);
-        // if(res.data.status === "success") {
-        //     setShowOtpModal(true);
-        // }
-        // dispatch(login(res?.data?.data))
-        localStorage.setItem("token", JSON.stringify(res.data.token));
+        toast.success(res?.data?.message)
+        sessionStorage.setItem("user", JSON.stringify(res?.data?.data))
+        router.push('/verify-account')
+      //   // if(res.data.status === "success") {
+      //   //     setShowOtpModal(true);
+      //   // }
+      //   localStorage.setItem("token", JSON.stringify(res.data.token));
       } catch (error) {
         setLoading(false);
         console.log(error);
@@ -77,7 +66,7 @@ function CreateAccount() {
       if (!values.name) {
         errors.name = "username is Required!";
       }
-      if (!values.healthcareServiceProvider?.value) {
+      if (!insurance) {
         errors.healthcareServiceProvider =
           "Health care service provider is Required!";
       }
@@ -89,12 +78,12 @@ function CreateAccount() {
       if (!values.phoneNumber) {
         errors.phoneNumber = "Phone Number is Required!";
       } else if (values.phoneNumber.length !== 11) {
-        errors.password = "Phonenumber  must be 11 characters!";
+        errors.phoneNumber = "Phonenumber  must be 11 characters!";
       }
       if (!values.password) {
         errors.password = "password is Required!";
-      } else if (values.password.length < 8) {
-        errors.password = "password must be atleast 8 characters!";
+      } else if (!passwordRegex.test(values.password)) {
+        errors.password = "password must be atleast 8 characters, with one uppercase, one lowercase and a special character!";
       }
       if (!values.confirmPassword) {
         errors.confirmPassword = "confirmPassword is Required!";
@@ -135,7 +124,7 @@ function CreateAccount() {
                   formik.touched.name &&
                   formik.errors.name &&
                   "border border-red-500 bg-red-100"
-                } border border-[#E8EDE8] rounded-2xl w-full py-3 px-3 text-[#302929] focus:outline-none text-base font-normal`}
+                } border border-[#E8EDE8] rounded-2xl w-full py-3 px-3 text-[#302929] focus:outline-none placeholder:text-black placeholder:text-sm text-base font-normal`}
                 type="text"
                 value={formik.values.name}
                 onChange={formik.handleChange}
@@ -160,7 +149,7 @@ function CreateAccount() {
                   formik.touched.email &&
                   formik.errors.email &&
                   "border border-red-500 bg-red-100"
-                } border border-[#E8EDE8] rounded-2xl w-full py-3 px-3 text-[#302929] leading-tight focus:outline-none text-base font-normal focus:border-[#2B5F2B]`}
+                } border border-[#E8EDE8] rounded-2xl w-full py-3 px-3 text-[#302929] leading-tight focus:outline-none placeholder:text-black placeholder:text-sm text-base font-normal focus:border-[#2B5F2B]`}
                 type="text"
                 value={formik.values.email}
                 onChange={formik.handleChange}
@@ -185,7 +174,7 @@ function CreateAccount() {
                   formik.touched.phoneNumber &&
                   formik.errors.phoneNumber &&
                   "border border-red-500 bg-red-100"
-                } border border-[#E8EDE8] rounded-2xl w-full py-3 px-3 text-[#302929] leading-tight focus:outline-none text-base font-normal focus:border-[#2B5F2B]`}
+                } border border-[#E8EDE8] rounded-2xl w-full py-3 px-3 text-[#302929] leading-tight focus:outline-none placeholder:text-black placeholder:text-sm text-base font-normal focus:border-[#2B5F2B]`}
                 type="text"
                 value={formik.values.phoneNumber}
                 onChange={formik.handleChange}
@@ -210,7 +199,7 @@ function CreateAccount() {
                   formik.touched.password &&
                   formik.errors.password &&
                   "border border-red-500 bg-red-100"
-                } border border-[#E8EDE8] rounded-2xl w-full py-3 px-3 text-[#302929] leading-tight focus:outline-none text-base font-normal focus:border-[#2B5F2B]`}
+                } border border-[#E8EDE8] rounded-2xl w-full py-3 px-3 text-[#302929] leading-tight focus:outline-none placeholder:text-black placeholder:text-sm text-base font-normal focus:border-[#2B5F2B]`}
                 type="password"
                 value={formik.values.password}
                 onChange={formik.handleChange}
@@ -235,7 +224,7 @@ function CreateAccount() {
                   formik.touched.confirmPassword &&
                   formik.errors.confirmPassword &&
                   "border border-red-500 bg-red-100"
-                } border border-[#E8EDE8] rounded-2xl w-full py-3 px-3 text-[#302929] leading-tight !focus:outline-none text-base font-normal`}
+                } border border-[#E8EDE8] rounded-2xl w-full py-3 px-3 text-[#302929] leading-tight !focus:outline-none placeholder:text-black placeholder:text-sm text-base font-normal`}
                 type="password"
                 value={formik.values.confirmPassword}
                 onChange={formik.handleChange}
@@ -258,12 +247,18 @@ function CreateAccount() {
               >
                 Choose healthcare service provider
               </label>
-              <div className={`${
-                    formik.touched.healthcareServiceProvider &&
-                    formik.errors.healthcareServiceProvider &&
-                    "border border-red-500 bg-red-100"
-                  } rounded-2xl w-full text-[#302929] leading-tight focus:outline-none text-base font-normal focus:border-[#2B5F2B]`}>
-                <HealthSelector/>
+              <div
+                className={`${
+                  formik.touched.healthcareServiceProvider &&
+                  formik.errors.healthcareServiceProvider &&
+                  "border border-red-500 bg-red-100"
+                } border border-[#E8EDE8] rounded-2xl w-full text-[#302929] leading-tight focus:outline-none text-base font-normal focus:border-[#2B5F2B]`}
+              >
+                <HealthSelector
+                  insurance={insurance}
+                  setInsurance={setInsurance}
+                  formik={formik}
+                />
               </div>
               {formik.touched.healthcareServiceProvider &&
               formik.errors.healthcareServiceProvider ? (
@@ -289,7 +284,7 @@ function CreateAccount() {
               type="submit"
               className="bg-[#2B5F2B] mb-5 mt-3 text-[#ffff] w-full py-3 rounded-3xl font-normal text-base"
             >
-              Create Account
+              {loading ? "loading...": "Create Account"}
             </button>
           </form>
         </div>
