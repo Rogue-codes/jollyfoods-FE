@@ -1,5 +1,5 @@
 "use client";
-import { ArrowDown2, ArrowLeft, Js } from "iconsax-react";
+import { ArrowLeft } from "iconsax-react";
 import React, { useState } from "react";
 import Image from "next/image";
 import { Breakfast, Logo } from "@/assets";
@@ -124,7 +124,7 @@ function CreateAccount() {
                   formik.touched.name &&
                   formik.errors.name &&
                   "border border-red-500 bg-red-100"
-                } border border-[#E8EDE8] rounded-2xl w-full py-3 px-3 text-[#302929] focus:outline-none placeholder:text-black placeholder:text-sm text-base font-normal`}
+                } border border-[#E8EDE8] rounded-2xl w-full py-3 px-3 text-[#302929] focus:outline-none placeholder:text-[#989494] placeholder:text-sm text-base font-normal`}
                 type="text"
                 value={formik.values.name}
                 onChange={formik.handleChange}
@@ -149,7 +149,7 @@ function CreateAccount() {
                   formik.touched.email &&
                   formik.errors.email &&
                   "border border-red-500 bg-red-100"
-                } border border-[#E8EDE8] rounded-2xl w-full py-3 px-3 text-[#302929] leading-tight focus:outline-none placeholder:text-black placeholder:text-sm text-base font-normal focus:border-[#2B5F2B]`}
+                } border border-[#E8EDE8] rounded-2xl w-full py-3 px-3 text-[#302929] leading-tight focus:outline-none placeholder:text-[#989494] placeholder:text-sm text-base font-normal focus:border-[#2B5F2B]`}
                 type="text"
                 value={formik.values.email}
                 onChange={formik.handleChange}
@@ -174,7 +174,7 @@ function CreateAccount() {
                   formik.touched.phoneNumber &&
                   formik.errors.phoneNumber &&
                   "border border-red-500 bg-red-100"
-                } border border-[#E8EDE8] rounded-2xl w-full py-3 px-3 text-[#302929] leading-tight focus:outline-none placeholder:text-black placeholder:text-sm text-base font-normal focus:border-[#2B5F2B]`}
+                } border border-[#E8EDE8] rounded-2xl w-full py-3 px-3 text-[#302929] leading-tight focus:outline-none placeholder:text-[#989494] placeholder:text-sm text-base font-normal focus:border-[#2B5F2B]`}
                 type="text"
                 value={formik.values.phoneNumber}
                 onChange={formik.handleChange}
@@ -199,7 +199,7 @@ function CreateAccount() {
                   formik.touched.password &&
                   formik.errors.password &&
                   "border border-red-500 bg-red-100"
-                } border border-[#E8EDE8] rounded-2xl w-full py-3 px-3 text-[#302929] leading-tight focus:outline-none placeholder:text-black placeholder:text-sm text-base font-normal focus:border-[#2B5F2B]`}
+                } border border-[#E8EDE8] rounded-2xl w-full py-3 px-3 text-[#302929] leading-tight focus:outline-none placeholder:text-[#989494] placeholder:text-sm text-base font-normal focus:border-[#2B5F2B]`}
                 type="password"
                 value={formik.values.password}
                 onChange={formik.handleChange}
@@ -224,7 +224,7 @@ function CreateAccount() {
                   formik.touched.confirmPassword &&
                   formik.errors.confirmPassword &&
                   "border border-red-500 bg-red-100"
-                } border border-[#E8EDE8] rounded-2xl w-full py-3 px-3 text-[#302929] leading-tight !focus:outline-none placeholder:text-black placeholder:text-sm text-base font-normal`}
+                } border border-[#E8EDE8] rounded-2xl w-full py-3 px-3 text-[#302929] leading-tight !focus:outline-none placeholder:text-[#989494] placeholder:text-sm text-base font-normal`}
                 type="password"
                 value={formik.values.confirmPassword}
                 onChange={formik.handleChange}
