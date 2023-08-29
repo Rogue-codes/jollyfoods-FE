@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios';
+import { getAuthToken } from './auth';
 
 const ApiFetcher = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -10,8 +11,8 @@ const ApiFetcher = axios.create({
 })
 
 const onRequest = (request: any) => {
-    const user = localStorage.getItem('token');
-    const token = JSON.parse(user!);
+    // const user = localStorage.getItem('token');
+    const token = getAuthToken();
     request.headers.Authorization = token ? `Bearer ${token}` : '';
     return request;
 }

@@ -9,6 +9,8 @@ import { UserProps } from "@/interface";
 import ApiFetcher from "@/utils/api/ApiFetcher";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
+import { loginAuth } from "@/utils/api/auth";
 
 function VerifyLoginPage() {
   const [otp, setOtp] = useState("");
@@ -23,8 +25,12 @@ function VerifyLoginPage() {
     }
   }, []);
 
+  const { kpangba_user, login, logout } = useAuth();
+
   const router = useRouter();
-  const verifyUser = async () => {
+
+  const verifyUser = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setLoading(true);
     try {
       const res = await ApiFetcher.post("/user/account/verify", {
@@ -33,9 +39,12 @@ function VerifyLoginPage() {
       });
       setLoading(false);
       toast.success(res?.data?.message);
+      login(res?.data?.data);
+      loginAuth(res?.data?.access_token);
       router.push("/");
-    } catch (error) {
+    } catch (error: any) {
       setLoading(false);
+      toast.error(error?.response?.data?.message);
       console.log(error);
     }
   };
@@ -65,7 +74,11 @@ function VerifyLoginPage() {
               Enter code sent to your e-mail and phone number
             </span>
           </div>
-          <form action="" className="mt-10">
+          <form
+            action=""
+            className="mt-10"
+            onSubmit={(e: React.FormEvent<HTMLFormElement>) => verifyUser(e)}
+          >
             <OtpInput value={otp} valueLength={4} onChange={onChange} />
             <div className="flex gap-14 mt-12 items-start text-center justify-start">
               <span className="text-[#2B5F2B] text-base font-normal cursor-pointer">
@@ -75,12 +88,9 @@ function VerifyLoginPage() {
                 00:60 secs
               </span>
             </div>
-            <div
-              className="bg-[#2B5F2B] flex items-center justify-center text-center mb-5 mt-24 text-[#ffff] w-full py-3 rounded-3xl font-normal text-base"
-              onClick={verifyUser}
-            >
+            <button disabled={otp.length < 4}  className="bg-[#2B5F2B] flex items-center justify-center text-center mb-5 mt-24 text-[#ffff] w-full py-3 rounded-3xl font-normal text-base disabled:cursor-not-allowed disabled:opacity-50 ">
               {loading ? "Loading..." : "Verify Code"}
-            </div>
+            </button>
           </form>
         </div>
         <div className="bg-[#2B5F2B] mr-4 pl-14 rounded-xl flex flex-col items-start text-start justify-start w-1/2">
