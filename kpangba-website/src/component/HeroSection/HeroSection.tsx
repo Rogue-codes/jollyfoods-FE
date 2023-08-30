@@ -5,14 +5,20 @@ import { HeroImage1, HeroImage2, HeroImage3, HeroImage4 } from "@/assets";
 // import Select from '../select/Select';
 import { Location, Timer1, User } from "iconsax-react";
 import CustomSelect from "../../widget/Select";
-import { OptionProps } from "@/interface";
+import { OptionProps, RestaurantType } from "@/interface";
 import DateSelect from "@/widget/DateSelect";
 import TimePicker from "react-time-picker";
 import Link from "next/link";
 import { AM_PM, hourArr, minutesArr } from "@/utils";
 import Select from "../select/Select";
+import { useRouter } from "next/navigation";
 
-function HeroSection() {
+interface HeroProps {
+  loading: boolean;
+  restuarants: RestaurantType[] | null;
+}
+
+function HeroSection({ loading, restuarants }: HeroProps) {
   const getCurrentPeriod = () => {
     const now = new Date();
     return now.getHours() >= 12 ? "PM" : "AM";
@@ -91,6 +97,13 @@ function HeroSection() {
   const [location, setLocation] = useState<OptionProps | null>(null);
   const [numOfGuest, setNumOfGuest] = useState<number>(1);
   const guestArr = ["1", "2", "3", "4", "5", "6", "7", "8"];
+
+  const router = useRouter();
+
+  const handleClick = () => {
+    sessionStorage.setItem("restaurants", JSON.stringify(restuarants));
+    router.push("/reservation-result");
+  };
   return (
     <div className="mt-[8rem] flex flex-col items-center justify-center z-10">
       <div className="flex flex-col">
@@ -206,16 +219,17 @@ function HeroSection() {
             icon={<User size={19} variant="Linear" color="#302929" />}
           />
         </div>
-        <Link href="/reservation-result">
-          <div className="w-[10rem] bg-[#2B5F2B] px-4 py-3 rounded-2xl">
-            <button
-              className="text-white font-normal text-base"
-              onClick={() => setShowDropDown(false)}
-            >
-              Reserve
-            </button>
-          </div>
-        </Link>
+        <div className="w-[25%] bg-[#2B5F2B] px-4 py-3 rounded-2xl">
+          <button
+            className="text-white font-normal text-base disabled:cursor-not-allowed disabled:opacity-50"
+            onClick={handleClick}
+            disabled={loading}
+          >
+            {loading
+              ? "loading..."
+              : `${restuarants?.length} Restuarants Available`}
+          </button>
+        </div>
       </div>
       <div className="flex flex-row mt-[8rem] items-center justify-center gap-5">
         <Image
