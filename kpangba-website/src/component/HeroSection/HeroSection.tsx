@@ -105,13 +105,13 @@ function HeroSection({ loading, restuarants }: HeroProps) {
     router.push("/reservation-result");
   };
   return (
-    <div className="mt-[8rem] flex flex-col items-center justify-center z-10">
+    <div className="mt-[6rem] flex flex-col items-center justify-center z-10">
       <div className="flex flex-col">
         <div className="flex flex-col items-center justify-center text-[56px] text-[#302929] font-extrabold w-[48rem] mt-8">
           <span>Your meals, secure</span>
           <span>
             quality
-            <span className="bg-[#FCEA7D] ml-3 rounded-xl px-2">
+            <span className="bg-[#FCEA7D] ml-5 rounded-xl px-2">
               healthcare service
             </span>
           </span>
@@ -121,7 +121,7 @@ function HeroSection({ loading, restuarants }: HeroProps) {
           <span>consistently buy meals from our mobile restaurants.</span>
         </div>
       </div>
-      <div className="bg-[#FEF8D2] flex items-center justify-center text-center gap-4 border p-6 mt-16 border-[#D0B61B] w-[65rem] h-[6.5rem] rounded-3xl">
+      <div className="bg-[#FEF8D2] flex items-center justify-center text-center gap-4 border p-6 mt-12 border-[#D0B61B] w-[65rem] h-[6.5rem] rounded-3xl">
         <div className="w-[23%]">
           <CustomSelect
             // hideDropDownIcon
@@ -231,7 +231,7 @@ function HeroSection({ loading, restuarants }: HeroProps) {
           </button>
         </div>
       </div>
-      <div className="flex flex-row mt-[8rem] items-center justify-center gap-5">
+      <div className="flex flex-row mt-[4rem] items-center justify-center gap-5">
         <Image
           src={HeroImage1}
           alt=""
