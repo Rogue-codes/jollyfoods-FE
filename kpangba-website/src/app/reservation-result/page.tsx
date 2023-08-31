@@ -41,7 +41,7 @@ function ReservationResult() {
 
   const router = useRouter()
 
-  const data = sessionStorage.getItem("restaurants");
+  const data = typeof window !== "undefined" && sessionStorage.getItem("restaurants");
   useEffect(() => {
     if (data) {
       setRestaurant(JSON.parse(data));
@@ -151,7 +151,7 @@ function ReservationResult() {
           <div className="border"></div>
           <div className="w-[55rem] rounded-xl shadow-lg px-8 py-12 flex flex-col gap-8 bg-white">
             {restaurant?.map((item, index) => (
-              <ResultCard item={item}/>
+              <ResultCard item={item} key={index}/>
             ))}
           </div>
         </div>

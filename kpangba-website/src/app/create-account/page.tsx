@@ -50,7 +50,7 @@ function CreateAccount() {
         });
         setLoading(false);
         toast.success(res?.data?.message)
-        sessionStorage.setItem("user", JSON.stringify(res?.data?.data))
+        typeof window !== "undefined" && sessionStorage.setItem("user", JSON.stringify(res?.data?.data))
         router.push('/verify-account')
       //   // if(res.data.status === "success") {
       //   //     setShowOtpModal(true);

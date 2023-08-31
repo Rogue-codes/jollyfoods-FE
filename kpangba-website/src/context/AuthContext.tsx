@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { UserProps } from "@/interface";
 import { logoutAuth } from "@/utils/api/auth";
 import { ReactNode, createContext, useContext, useState } from "react";
@@ -17,17 +17,20 @@ interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [kpangba_user, setKpangba_user] = useState<UserProps | null>(
-    localStorage.getItem('kpangba_user') ? JSON.parse(localStorage.getItem('kpangba_user')!) : null
+    typeof window !== "undefined" && localStorage.getItem("kpangba_user")
+      ? JSON.parse(window.localStorage.getItem("kpangba_user")!)
+      : null
   );
 
   const login = (user: UserProps) => {
     setKpangba_user(user);
-    localStorage.setItem('kpangba_user',JSON.stringify(user));
+    typeof window !== "undefined" &&
+      localStorage.setItem("kpangba_user", JSON.stringify(user));
   };
 
   const logout = () => {
     setKpangba_user(null);
-    localStorage.removeItem('kpangba_user');
+    typeof window !== "undefined" && localStorage.removeItem("kpangba_user");
     logoutAuth();
   };
 
@@ -44,7 +47,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 }
