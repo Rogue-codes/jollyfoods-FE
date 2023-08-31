@@ -41,7 +41,7 @@ function ReservationResult() {
 
   const router = useRouter()
 
-  const data = sessionStorage.getItem("restaurants");
+  const data = typeof window !== "undefined" && sessionStorage.getItem("restaurants");
   useEffect(() => {
     if (data) {
       setRestaurant(JSON.parse(data));
@@ -146,12 +146,12 @@ function ReservationResult() {
         </div>
         <div className="flex flex-col gap-4 w-[56.7rem] ">
           <p className="bg-[#FEF8D2] mt-5 mb-2 items-center text-center justify-center rounded-lg border border-[#D0B61B] w-[21rem] py-3">
-            <strong>{restaurant?.length}</strong> Kmt-5pangba food on wheels in Lagos
+            <strong>{restaurant?.length}</strong> Kpangba food on wheels in Lagos
           </p>
           <div className="border"></div>
           <div className="w-[55rem] rounded-xl shadow-lg px-8 py-12 flex flex-col gap-8 bg-white">
             {restaurant?.map((item, index) => (
-              <ResultCard item={item}/>
+              <ResultCard item={item} key={index}/>
             ))}
           </div>
         </div>

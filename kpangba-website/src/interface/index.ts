@@ -38,3 +38,9 @@ export interface RestaurantType {
     }
   ];
 }
+
+export interface TabOptions {
+  meal_type: string;
+  meals: string[];
+  _id: string;
+}

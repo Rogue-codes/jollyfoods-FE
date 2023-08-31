@@ -101,7 +101,7 @@ function HeroSection({ loading, restuarants }: HeroProps) {
   const router = useRouter();
 
   const handleClick = () => {
-    sessionStorage.setItem("restaurants", JSON.stringify(restuarants));
+    typeof window !== "undefined" && sessionStorage.setItem("restaurants", JSON.stringify(restuarants));
     router.push("/reservation-result");
   };
   return (
@@ -227,7 +227,7 @@ function HeroSection({ loading, restuarants }: HeroProps) {
           >
             {loading
               ? "loading..."
-              : `${restuarants?.length} Restuarants Available`}
+              : restuarants?.length ? `${restuarants?.length} Restuarants Available` : `network error`}
           </button>
         </div>
       </div>

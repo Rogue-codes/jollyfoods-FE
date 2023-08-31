@@ -16,7 +16,7 @@ function VerifyLoginPage() {
   const [otp, setOtp] = useState("");
   const onChange = (value: string) => setOtp(value);
   const [user, setUser] = useState<UserProps | null>(null);
-  const USER_SESSION = sessionStorage.getItem("user");
+  const USER_SESSION = typeof window !== "undefined" && sessionStorage.getItem("user");
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
