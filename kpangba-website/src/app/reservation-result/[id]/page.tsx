@@ -16,9 +16,8 @@ interface PageProps {
   params: { id: string };
 }
 export default function Resturant({ params }: PageProps) {
-
   const [loading, setLoading] = useState<boolean>(false);
-  const [result,setResult] = useState<RestaurantType>()
+  const [result, setResult] = useState<RestaurantType>();
 
   // make API call of fetch restuurant based on ID
   const fetchRestaurant = async () => {
@@ -37,18 +36,24 @@ export default function Resturant({ params }: PageProps) {
     fetchRestaurant();
   }, []);
 
-  console.log(result)
+  console.log(result);
 
-  const [activeTab,setActiveTab] = useState(0)
+  const [activeTab, setActiveTab] = useState(0);
 
   let menuContent;
 
   if (activeTab === 0) {
-    menuContent = <BreakFastList activeTab={activeTab} tabOptions={result?.menu} />;
+    menuContent = (
+      <BreakFastList activeTab={activeTab} tabOptions={result?.menu} />
+    );
   } else if (activeTab === 1) {
-    menuContent = <DinnerList activeTab={activeTab} tabOptions={result?.menu} />;
+    menuContent = (
+      <DinnerList activeTab={activeTab} tabOptions={result?.menu} />
+    );
   } else {
-    menuContent = <DinnerList activeTab={activeTab} tabOptions={result?.menu} />;
+    menuContent = (
+      <DinnerList activeTab={activeTab} tabOptions={result?.menu} />
+    );
   }
 
   return (
@@ -66,7 +71,9 @@ export default function Resturant({ params }: PageProps) {
           <div className="flex gap-16 items-center text-center justify-center">
             <div className="flex gap-2 items-center text-center justify-center bg-[#FEFAE1] p-2 rounded-xl">
               <Star1 variant="Bold" color="#D0B61C" size="20" />
-              <span className="text-[#302929] font-normal text-base">{result?.rating}</span>
+              <span className="text-[#302929] font-normal text-base">
+                {result?.rating}
+              </span>
             </div>
             <div className="flex gap-4 items-center text-center justify-center">
               <Location variant="Linear" color="#302929" size="20" />
@@ -96,7 +103,11 @@ export default function Resturant({ params }: PageProps) {
               <p className="text-[#302929] font-semibold text-3xl">
                 Today’s Menu
               </p>
-              <MenuTab activeTab={activeTab} setActiveTab={setActiveTab} tabOptions={result?.menu}/>
+              <MenuTab
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+                tabOptions={result?.menu}
+              />
               <div className="absolute z-20">{menuContent}</div>
             </div>
             <div className="w-[25rem] h-[20rem] mt-8 pl-8 flex flex-col items-start text-start justify-start border border-[#E2E9E2] bg-white rounded-2xl">

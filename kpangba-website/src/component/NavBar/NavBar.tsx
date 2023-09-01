@@ -22,9 +22,9 @@ export default function NavBar() {
         <span>Partners</span>
         <span>Blog</span>
         {kpangba_user ? (
-          <button className="flex justify-between items-center !gap-3 bg-[#2B5F2B] py-3.5 px-6 text-[#ffff] rounded-[20px] cursor-pointer">
-            <User variant="Bold" size={20} color="white" /> Profile
-          </button>
+          <div className="flex justify-between items-center !gap-3 bg-[#2B5F2B] py-3.5 px-6 text-[#ffff] rounded-[20px] cursor-pointer">
+            <User variant="Bold" size={20} color="white" />  Profile
+          </div>
         ) : (
           <Link href="/create-account">
             <span className="bg-[#2B5F2B] py-3.5 px-6 text-[#ffff] rounded-[20px] cursor-pointer">

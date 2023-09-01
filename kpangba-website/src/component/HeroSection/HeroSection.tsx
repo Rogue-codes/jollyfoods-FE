@@ -12,6 +12,7 @@ import Link from "next/link";
 import { AM_PM, hourArr, minutesArr } from "@/utils";
 import Select from "../select/Select";
 import { useRouter } from "next/navigation";
+import PersonSelect from "@/widget/PersonSelect";
 
 interface HeroProps {
   loading: boolean;
@@ -59,44 +60,15 @@ function HeroSection({ loading, restuarants }: HeroProps) {
     },
   ];
 
-  const [manuallySetHour, setManuallySetHour] = useState<boolean>(false);
+  const [time, setTime] = useState<string>();
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const now = new Date();
-      if (!manuallySetHour) {
-        setCurrentHour(String(now.getHours()).padStart(2, "0"));
-        setCurrentMinute(String(now.getMinutes()).padStart(2, "0"));
-      }
-    }, 1000); // Update every second
 
-    return () => clearInterval(interval);
-  }, [manuallySetHour]);
-
-  const setHour = (newHour: string) => {
-    setCurrentHour(newHour);
-    setManuallySetHour(true);
-  };
-
-  const setMinute = (newMinute: string) => {
-    setCurrentMinute(newMinute);
-    setManuallySetHour(true);
-  };
-
-  const [hour_now, setHour_now] = useState<string>(
-    String(new Date().getHours()).padStart(2, "0")
-  );
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setHour_now(String(new Date().getHours()).padStart(2, "0"));
-    }, 1000); // Update every second
-
-    return () => clearInterval(interval);
-  }, []);
   const [location, setLocation] = useState<OptionProps | null>(null);
   const [numOfGuest, setNumOfGuest] = useState<number>(1);
   const guestArr = ["1", "2", "3", "4", "5", "6", "7", "8"];
+  const [reservationDate,setReservationDate] = useState<Date | null>(new Date())
+
+  console.log(reservationDate)
 
   const router = useRouter();
 
@@ -133,18 +105,19 @@ function HeroSection({ loading, restuarants }: HeroProps) {
             value={location}
           />
         </div>
-        <div className="w-[15%]">
+        <div className="w-[18%]">
           <DateSelect
             className="items-center cursor-pointer rounded-lg !w-full h-12"
             placeholderText="Date"
-            // selected={expiryDate}
-            // onChange={(date) => {
-            // setExpiryDate(date);
-            // }}
+            selected={reservationDate}
+            onChange={(date) => {
+            setReservationDate(date);
+            }}
+            minDate={new Date()}
           />
         </div>
         <div className="w-[15%] relative">
-          <div
+          {/* <div
             className="w-full bg-white rounded-lg py-3 flex justify-center gap-3 items-center cursor-pointer"
             onClick={() => setShowDropDown(!showDropDown)}
           >
@@ -210,14 +183,11 @@ function HeroSection({ loading, restuarants }: HeroProps) {
                 </button>
               </div>
             </div>
-          )}
+          )} */}
+          <input type="time" value={time} onChange={(e)=>setTime(e.target.value)} className="w-full p-2 rounded-lg" name="" id="" />
         </div>
         <div className="w-[30%]">
-          <Select
-            options={guestArr}
-            placeholder="Number of Guest"
-            icon={<User size={19} variant="Linear" color="#302929" />}
-          />
+        <PersonSelect/>
         </div>
         <div className="w-[25%] bg-[#2B5F2B] px-4 py-3 rounded-2xl">
           <button

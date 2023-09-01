@@ -7,6 +7,10 @@ interface AuthContextType {
   kpangba_user: UserProps | null;
   login: (user: UserProps) => void;
   logout: () => void;
+  handleIncrement: (type:string) => void
+  handleDecrement: (type:string) => void
+  child: number;
+  adult: number;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -22,6 +26,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       : null
   );
 
+  const [adult, setAdult] = useState<number>(1);
+  const [child, setChildren] = useState<number>(0);
+
   const login = (user: UserProps) => {
     setKpangba_user(user);
     typeof window !== "undefined" &&
@@ -34,10 +41,26 @@ export function AuthProvider({ children }: AuthProviderProps) {
     logoutAuth();
   };
 
+  const handleIncrement = (type: string) => {
+    type === "adult"
+      ? setAdult((prev) => prev + 1)
+      : setChildren((prev) => prev + 1);
+  };
+
+  const handleDecrement = (type: string) => {
+    type === "adult"
+      ? setAdult((prev) => prev > 1 ? prev - 1 : 1)
+      : setChildren((prev) => prev > 0 ? prev - 1 : 0);
+  };
+
   const contextValue: AuthContextType = {
     kpangba_user,
     login,
     logout,
+    child,
+    adult,
+    handleIncrement,
+    handleDecrement
   };
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
