@@ -30,7 +30,7 @@ export default function DateSelect(
 ) {
     const CustomInput = React.forwardRef(({value, onClick, onChange} : any, ref : any) => {
         return <div onClick={onClick}
-                className={`flex gap-3 pl-5 item-center cursor-pointer items-center bg-white  ` + className + (disbaled ? " opacity-80" : '')} style={style}  >
+                className={`flex gap-3 px-2  item-center cursor-pointer items-center bg-white  ` + className + (disbaled ? " opacity-80" : '')} style={style}  >
             <Calendar2 variant='Linear' size="28" className='text-blue-1 '/>
             <input 
                 className='disabled:cursor-not-allowed focus:outline-none text-base text-[#302929] w-full placeholder:text-[#302929] bg-white'
@@ -49,7 +49,7 @@ export default function DateSelect(
             selected={selected}
             minDate={minDate}
             maxDate={maxDate}
-            // disabled={disbaled}
+            dateFormat="dd/MM/yyyy"
         />
     </div>
 }

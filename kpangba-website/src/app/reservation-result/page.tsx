@@ -1,10 +1,12 @@
 "use client";
 import { RestaurantPic } from "@/assets";
 import NavBar from "@/component/NavBar/NavBar";
+import { useAuth } from "@/context/AuthContext";
 import { OptionProps, RestaurantType } from "@/interface";
 import { locationResult } from "@/json/StaticData";
 import ResultCard from "@/utils/ResultCard";
 import DateSelect from "@/widget/DateSelect";
+import PersonSelect from "@/widget/PersonSelect";
 import CustomSelect from "@/widget/Select";
 import { Clock, Location, Star1, User } from "iconsax-react";
 import Link from "next/link";
@@ -13,8 +15,6 @@ import React, { useEffect, useState } from "react";
 import TimePicker from "react-time-picker";
 
 function ReservationResult() {
-  const [timeValue, setTimeValue] = useState("10:00");
-  const [loaction, setLocation] = useState<OptionProps | null>(null);
   const [restaurant, setRestaurant] = useState<RestaurantType[] | null>(null);
   const optionsArr: OptionProps[] = [
     {
@@ -38,22 +38,44 @@ function ReservationResult() {
       value: "Lekki",
     },
   ];
+  const [error, setError] = useState<string | null>();
+  const [isError, setIsError] = useState<boolean>(false);
 
-  const router = useRouter()
+  // const validateTime = (time: string) => {
+  //   const selectedDate = new Date(`2023-09-01T${time}`);
+  //   const startHour = 8;
+  //   const endHour = 18;
 
-  const data = typeof window !== "undefined" && sessionStorage.getItem("restaurants");
+  //   if (
+  //     selectedDate.getHours() < startHour ||
+  //     selectedDate.getHours() >= endHour
+  //   ) {
+  //     setError("Time must be between 8:00 AM and 6:00 PM");
+  //     setIsError(true);
+  //   } else {
+  //     setError(null);
+  //     setIsError(false);
+  //   }
+  // };
+  const { reservationDate, setReservationDate, location, setLocation, reservationTime, handleTimeChange } =
+    useAuth();
+
+  const router = useRouter();
+
+  const data =
+    typeof window !== "undefined" && sessionStorage.getItem("restaurants");
   useEffect(() => {
     if (data) {
       setRestaurant(JSON.parse(data));
-    }else{
-      router.push('/')
+    } else {
+      router.push("/");
     }
   }, []);
   return (
     <div className="flex min-h-screen flex-col">
       <NavBar />
       <div className="bg-[#2B5F2B] flex mt-[8rem] py-5 justify-center text-center items-center w-full  ">
-        <div className="bg-[#FEF8D2] flex items-center justify-center text-center gap-4 border p-6  border-[#D0B61B] w-[55rem] h-[6.5rem] rounded-3xl">
+        <div className="bg-[#FEF8D2] flex items-center justify-center text-center gap-4 border p-6  border-[#D0B61B] w-[65rem] h-[6.5rem] rounded-3xl">
           <div className="w-[10rem]">
             <CustomSelect
               // hideDropDownIcon
@@ -62,39 +84,33 @@ function ReservationResult() {
               options={optionsArr}
               onChange={setLocation}
               label="Location"
-              value={loaction}
+              value={location}
             />
           </div>
-          <div className="w-[6rem]">
-            <DateSelect
-              className="items-center cursor-pointer rounded-lg !w-full h-12"
-              placeholderText="Date"
-              // selected={expiryDate}
-              // onChange={(date) => {
-              // setExpiryDate(date);
-              // }}
-            />
-          </div>
-          <div className="w-[10rem]">
-            <TimePicker
-              // onChange={setTimeValue}
-              value={timeValue}
-              disableClock={true}
-              clearIcon={null}
-              className="bg-white cursor-pointer items-center focus:outline-none w-full border  p-[10px] rounded-lg"
-            />
-          </div>
-          <div className="w-[15rem]">
-            <CustomSelect
-              // hideDropDownIcon
-              icon={<User size={19} variant="Linear" color="#302929" />}
-              className="!w-full rounded-lg h-6"
-              options={optionsArr}
-              onChange={setLocation}
-              label="Number of guest"
-              value={loaction}
-            />
-          </div>
+          <div className="w-[18%]">
+          <DateSelect
+            className="items-center cursor-pointer rounded-lg !w-full h-12"
+            placeholderText="Date"
+            selected={reservationDate}
+            onChange={(date) => {
+              setReservationDate(date);
+            }}
+            minDate={new Date()}
+          />
+        </div>
+        <div className="w-[15%] relative">
+          <input
+            type="time"
+            value={reservationTime}
+            onChange={handleTimeChange}
+            className="w-full p-2 rounded-lg"
+            name=""
+            id=""
+          />
+        </div>
+          <div className="w-[30%]">
+          <PersonSelect />
+        </div>
           <div className="w-[10rem] bg-[#2B5F2B] px-4 py-3 rounded-2xl">
             <Link href="/reservation-result">
               <button className="text-white font-normal text-base">
@@ -146,12 +162,13 @@ function ReservationResult() {
         </div>
         <div className="flex flex-col gap-4 w-[56.7rem] ">
           <p className="bg-[#FEF8D2] mt-5 mb-2 items-center text-center justify-center rounded-lg border border-[#D0B61B] w-[21rem] py-3">
-            <strong>{restaurant?.length}</strong> Kpangba food on wheels in Lagos
+            <strong>{restaurant?.length}</strong> Kpangba food on wheels in
+            Lagos
           </p>
           <div className="border"></div>
           <div className="w-[55rem] rounded-xl shadow-lg px-8 py-12 flex flex-col gap-8 bg-white">
             {restaurant?.map((item, index) => (
-              <ResultCard item={item} key={index}/>
+              <ResultCard item={item} key={index} />
             ))}
           </div>
         </div>

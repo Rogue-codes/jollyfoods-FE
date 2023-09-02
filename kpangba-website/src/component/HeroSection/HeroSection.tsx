@@ -1,40 +1,48 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import Image from "next/image";
 import { HeroImage1, HeroImage2, HeroImage3, HeroImage4 } from "@/assets";
 // import Select from '../select/Select';
-import { Location, Timer1, User } from "iconsax-react";
+import { Location } from "iconsax-react";
 import CustomSelect from "../../widget/Select";
 import { OptionProps, RestaurantType } from "@/interface";
 import DateSelect from "@/widget/DateSelect";
-import TimePicker from "react-time-picker";
-import Link from "next/link";
-import { AM_PM, hourArr, minutesArr } from "@/utils";
-import Select from "../select/Select";
 import { useRouter } from "next/navigation";
+import PersonSelect from "@/widget/PersonSelect";
+import { useAuth } from "@/context/AuthContext";
 
 interface HeroProps {
   loading: boolean;
   restuarants: RestaurantType[] | null;
+  setLocation: Dispatch<SetStateAction<OptionProps | null>>;
+  location: OptionProps | null;
 }
 
-function HeroSection({ loading, restuarants }: HeroProps) {
-  const getCurrentPeriod = () => {
-    const now = new Date();
-    return now.getHours() >= 12 ? "PM" : "AM";
+function HeroSection({
+  loading,
+  restuarants,
+  location,
+  setLocation,
+}: HeroProps) {
+  const { reservationTime, handleTimeChange } = useAuth();
+  const [error, setError] = useState<string | null>();
+  const [isError, setIsError] = useState<boolean>(false);
+
+  const validateTime = (time: string) => {
+    const selectedDate = new Date(`2000-01-01T${time}`);
+    const startHour = 8;
+    const endHour = 18;
+
+    return (
+      selectedDate.getHours() >= startHour && selectedDate.getHours() < endHour
+    );
   };
-
-  const [currentHour, setCurrentHour] = useState<string>(
-    String(new Date().getHours()).padStart(2, "0")
-  );
-  const [currentMinute, setCurrentMinute] = useState<string>(
-    String(new Date().getMinutes()).padStart(2, "0")
-  );
-  const [currentPeriod, setCurrentPeriod] = useState<string>(
-    getCurrentPeriod()
-  );
-
-  const [showDropDown, setShowDropDown] = useState<boolean>(false);
 
   const optionsArr: OptionProps[] = [
     {
@@ -59,49 +67,15 @@ function HeroSection({ loading, restuarants }: HeroProps) {
     },
   ];
 
-  const [manuallySetHour, setManuallySetHour] = useState<boolean>(false);
+  const { setReservationDate, reservationDate } = useAuth();
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const now = new Date();
-      if (!manuallySetHour) {
-        setCurrentHour(String(now.getHours()).padStart(2, "0"));
-        setCurrentMinute(String(now.getMinutes()).padStart(2, "0"));
-      }
-    }, 1000); // Update every second
-
-    return () => clearInterval(interval);
-  }, [manuallySetHour]);
-
-  const setHour = (newHour: string) => {
-    setCurrentHour(newHour);
-    setManuallySetHour(true);
-  };
-
-  const setMinute = (newMinute: string) => {
-    setCurrentMinute(newMinute);
-    setManuallySetHour(true);
-  };
-
-  const [hour_now, setHour_now] = useState<string>(
-    String(new Date().getHours()).padStart(2, "0")
-  );
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setHour_now(String(new Date().getHours()).padStart(2, "0"));
-    }, 1000); // Update every second
-
-    return () => clearInterval(interval);
-  }, []);
-  const [location, setLocation] = useState<OptionProps | null>(null);
-  const [numOfGuest, setNumOfGuest] = useState<number>(1);
-  const guestArr = ["1", "2", "3", "4", "5", "6", "7", "8"];
+  console.log(reservationDate);
 
   const router = useRouter();
 
   const handleClick = () => {
-    typeof window !== "undefined" && sessionStorage.setItem("restaurants", JSON.stringify(restuarants));
+    typeof window !== "undefined" &&
+      sessionStorage.setItem("restaurants", JSON.stringify(restuarants));
     router.push("/reservation-result");
   };
   return (
@@ -133,101 +107,48 @@ function HeroSection({ loading, restuarants }: HeroProps) {
             value={location}
           />
         </div>
-        <div className="w-[15%]">
+        <div className="w-[18%]">
           <DateSelect
             className="items-center cursor-pointer rounded-lg !w-full h-12"
             placeholderText="Date"
-            // selected={expiryDate}
-            // onChange={(date) => {
-            // setExpiryDate(date);
-            // }}
+            selected={reservationDate}
+            onChange={(date) => {
+              setReservationDate(date);
+            }}
+            minDate={new Date()}
           />
         </div>
         <div className="w-[15%] relative">
-          <div
-            className="w-full bg-white rounded-lg py-3 flex justify-center gap-3 items-center cursor-pointer"
-            onClick={() => setShowDropDown(!showDropDown)}
-          >
-            <Timer1 />
-            <p>
-              {currentHour}:{currentMinute} {currentPeriod}
-            </p>
-          </div>
-          {showDropDown && (
-            <div
-              className="absolute flex left-0 top-12 w-full h-44 border"
-              onBlur={() => setShowDropDown(false)}
-            >
-              <div className="hide_overflow w-[33%] h-full border-r bg-white overflow-y-auto">
-                {hourArr.map((hr, _) => (
-                  <p
-                    key={_}
-                    className={`${
-                      currentHour === hr
-                        ? "bg-[#2B5F2B] text-white hover:bg-[#2B5F2B]"
-                        : "bg-white hover:bg-[#FEF8D2]"
-                    } ${
-                      parseInt(hour_now) + 1 > parseInt(hr) ? "disabled" : ""
-                    } p-2 cursor-pointer`}
-                    onClick={() =>
-                      parseInt(hour_now) <= parseInt(hr) && setHour(hr)
-                    }
-                  >
-                    {hr}
-                  </p>
-                ))}
-              </div>
-              <div className="hide_overflow overflow-y-scroll w-[33%] h-full border-r bg-white">
-                {minutesArr.map((min, _) => (
-                  <p
-                    key={_}
-                    className={`${
-                      currentMinute === min
-                        ? "bg-[#2B5F2B] text-white hover:bg-[#2B5F2B]"
-                        : "bg-white hover:bg-[#FEF8D2]"
-                    } p-2 cursor-pointer`}
-                    onClick={() => setMinute(min)}
-                  >
-                    {min}
-                  </p>
-                ))}
-              </div>
-              <div className="w-[33%] h-full  bg-white">
-                {AM_PM.map((am_pm, _) => (
-                  <p
-                    key={_}
-                    className="p-2 hover:bg-[#FEF8D2] cursor-pointer"
-                    onClick={() => setCurrentPeriod(am_pm)}
-                  >
-                    {am_pm}
-                  </p>
-                ))}
-                <button
-                  className="p-2 bg-[#2B5F2B] text-white rounded-lg"
-                  onClick={() => setShowDropDown(false)}
-                >
-                  OK
-                </button>
-              </div>
-            </div>
-          )}
+          <input
+            type="time"
+            value={reservationTime}
+            onChange={handleTimeChange}
+            className="w-full p-2 rounded-lg"
+            id="reservationTime"
+            name="reservationTime"
+            min="08:00"
+            max="17:00"
+            step="3600" // Step is set to 1 hour (3600 seconds)
+          />
         </div>
         <div className="w-[30%]">
-          <Select
-            options={guestArr}
-            placeholder="Number of Guest"
-            icon={<User size={19} variant="Linear" color="#302929" />}
-          />
+          <PersonSelect />
         </div>
         <div className="w-[25%] bg-[#2B5F2B] px-4 py-3 rounded-2xl">
           <button
             className="text-white font-normal text-base disabled:cursor-not-allowed disabled:opacity-50"
             onClick={handleClick}
-            disabled={loading}
+            disabled={loading || isError || !restuarants?.length}
           >
-            {loading
-              ? "loading..."
-              : restuarants?.length ? `${restuarants?.length} Restuarants Available` : `network error`}
+            {loading ? (
+              "loading..."
+            ) : error ? (
+              <p className="text-xs text-red-500">{error}</p>
+            ) : restuarants?.length ? (
+              `${restuarants?.length} Restuarants Available`
+            ) : (
+              `0 Restuarants Available`
+            )}
           </button>
         </div>
       </div>

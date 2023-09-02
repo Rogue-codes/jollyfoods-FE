@@ -6,17 +6,21 @@ import HeroSection from "@/component/HeroSection/HeroSection";
 import NavBar from "@/component/NavBar/NavBar";
 import PopularLocation from "@/component/PopularLocation/PopularLocation";
 import Royalty from "@/component/Royalty";
-import { RestaurantType } from "@/interface";
+import { useAuth } from "@/context/AuthContext";
+import { OptionProps, RestaurantType } from "@/interface";
 import ApiFetcher from "@/utils/api/ApiFetcher";
 import { useEffect, useState } from "react";
 
 export default function Home() {
+  const {location,setLocation} = useAuth()
   const [restuarants,setRestuarants] = useState<RestaurantType[] | null>(null)
   const [loading,setLoading] = useState<boolean>(false)
+
+  const searchParams = location ? `?location=${location?.value}`:""
   const getResturants = async () => {
     setLoading(true)
     try {
-      const res = await ApiFetcher.get(`/resturant/all`);
+      const res = await ApiFetcher.get(`/resturant/all${searchParams}`);
       setLoading(false)
       setRestuarants(res?.data?.data)
       console.log(res.data.data);
@@ -28,12 +32,12 @@ export default function Home() {
 
   useEffect(() => {
     getResturants();
-  }, []);
+  }, [location]);
   return (
     <main className="flex min-h-screen flex-col">
       <div className="px-16">
         <NavBar />
-        <HeroSection loading={loading} restuarants={restuarants} />
+        <HeroSection location={location} setLocation={setLocation} loading={loading} restuarants={restuarants} />
         <PopularLocation />
         <HealthCard />
       </div>
