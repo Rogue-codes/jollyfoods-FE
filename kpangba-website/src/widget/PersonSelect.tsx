@@ -15,7 +15,7 @@ export default function PersonSelect() {
         className="w-full flex justify-between items-center bg-white rounded-lg"
         onClick={() => setShowSeletor(!showSelector)}
       >
-        <User />{" "}
+        <User size={20} />{" "}
         <p>
           <strong>{adult}</strong> Adult
         </p>{" "}

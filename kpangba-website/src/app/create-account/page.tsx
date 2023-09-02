@@ -56,9 +56,9 @@ function CreateAccount() {
       //   //     setShowOtpModal(true);
       //   // }
       //   localStorage.setItem("token", JSON.stringify(res.data.token));
-      } catch (error) {
+      } catch (error:any) {
         setLoading(false);
-        console.log(error);
+        toast.error(error?.response?.data?.message);
       }
     },
     validate: (values) => {
