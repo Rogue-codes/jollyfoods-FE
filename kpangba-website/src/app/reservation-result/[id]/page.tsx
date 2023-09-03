@@ -57,7 +57,7 @@ export default function Resturant({ params }: PageProps) {
     );
   } else if (activeTab === 1) {
     menuContent = (
-      <DinnerList activeTab={activeTab} tabOptions={result?.menu} />
+      <LunchList activeTab={activeTab} tabOptions={result?.menu} />
     );
   } else {
     menuContent = (
@@ -95,33 +95,33 @@ export default function Resturant({ params }: PageProps) {
           <p>Loading...</p>
         </div>
       ) : (
-        <div className="section1 mt-[8rem] px-16 flex flex-col items-start justify-start text-start">
-          <p className="text-[#302929] font-semibold text-xl mb-6">
+        <div className="section1 mt-[8rem] px-4 lg:px-16 flex flex-col items-start justify-start text-start">
+          <p className="text-[#302929] font-semibold lg:text-xl text-base lg:mb-6 mb-4">
             {result?.resturant_name}
           </p>
-          <div className="flex gap-16 items-center text-center justify-center">
+          <div className="flex lg:gap-16 gap-7 items-center text-center justify-center">
             <div className="flex gap-2 items-center text-center justify-center bg-[#FEFAE1] p-2 rounded-xl">
-              <Star1 variant="Bold" color="#D0B61C" size="20" />
-              <span className="text-[#302929] font-normal text-base">
+             <div><Star1 variant="Bold" color="#D0B61C" size="20" /></div>
+              <span className="text-[#302929] font-normal lg:text-base text-sm">
                 {result?.rating}
               </span>
             </div>
-            <div className="flex gap-4 items-center text-center justify-center">
-              <Location variant="Linear" color="#302929" size="20" />
-              <span className="text-[#302929] font-normal text-base">
+            <div className="flex gap-2 lg:gap-4 items-start text-start justify-start">
+             <div><Location variant="Linear" color="#302929" size="20" /></div> 
+              <div className="text-[#302929] font-normal text-sm lg:text-base">
                 {result?.location_meta?.address}
-              </span>
+              </div>
             </div>
           </div>
-          <div className="gap-3 mt-10 w-[74rem] items-center justify-center text-center flex flex-row">
-            <div className=" w-[36.75rem] h-[14.9rem] ">
+          <div className="gap-3 mt-10 lg:w-[74rem] w-full items-center justify-center text-center flex flex-row">
+            <div className=" w-[36.75rem] h-[10rem] lg:h-[14.9rem] ">
               <Image
                 src={RestaurantPic}
                 alt=""
                 className="w-full h-full object-cover rounded-xl"
               />
             </div>
-            <div className="w-[36.75rem] h-[14.9rem]">
+            <div className="w-[36.75rem] h-[10rem] lg:h-[14.9rem]">
               <Image
                 src={RestaurantPic}
                 alt=""
@@ -129,9 +129,9 @@ export default function Resturant({ params }: PageProps) {
               />
             </div>
           </div>
-          <div className="flex justify-between gap-80 mt-10 w-full">
+          <div className="flex flex-col lg:justify-between gap-64 lg:gap-80 mt-10 w-full">
             <div className="">
-              <p className="text-[#302929] font-semibold text-3xl">
+              <p className="text-[#302929] font-semibold text-base lg:text-3xl">
                 Today’s Menu
               </p>
               <MenuTab
@@ -141,14 +141,14 @@ export default function Resturant({ params }: PageProps) {
               />
               <div className="absolute z-20">{menuContent}</div>
             </div>
-            <div className="w-[25rem] h-[20rem] mt-8 pl-8 flex flex-col items-start text-start justify-start border border-[#E2E9E2] bg-white rounded-2xl">
-              <span className="font-semibold mt-10 text-xl text-[#302929]">
+            <div className="lg:w-[25rem] w-full h-[20rem] lg:mt-8 mt-4 lg:pl-8  pl-0 flex flex-col items-start text-start justify-start border border-[#E2E9E2] bg-white rounded-2xl">
+              <span className="font-semibold ml-4 lg:ml-0 mt-10 text-xl text-[#302929]">
                 N{result?.price_per_person.toLocaleString()}
                 <span className="font-normal ml-3 text-base text-[#302929]">
-                  per Buffets
+                  per Buffet
                 </span>
               </span>
-              <div className="flex mt-8 w-full items-start justify-start gap-32 text-start">
+              <div className="flex mt-8 ml-4 lg:ml-0 w-full items-start justify-start gap-2 lg:gap-32 text-start">
                 <div>
                   <div className="font-normal gap-4 text-base text-[#302929] flex items-center justify-center text-center">
                     <User variant="Linear" size="20px" color="#302929" />
@@ -175,11 +175,11 @@ export default function Resturant({ params }: PageProps) {
                   </div>
                 </div>
               </div>
-              <div className="mt-8 w-[50%] bg-[#FEFAE1] p-3 rounded-lg text-black">
+              <div className="mt-8 lg:w-[50%] w-[75%] ml-4 lg:ml-0 bg-[#FEFAE1] p-3 rounded-lg text-black">
                 Meal Type: {mealType}
               </div>
               <button
-                className="bg-[#2B5F2B] hover:scale-105 transition-all w-[17rem] mt-8 text-white font-normla text-xl rounded-3xl py-3 px-4 cursor-pointer"
+                className="bg-[#2B5F2B] flex items-center justify-center hover:scale-105 transition-all w-full lg:w-[17rem] mt-8 text-white font-normal text-base lg:text-xl rounded-3xl py-3 px-4 cursor-pointer "
                 onClick={() => setShowModal(true)}
               >
                 Continue to checkout

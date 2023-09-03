@@ -95,7 +95,7 @@ function CreateAccount() {
   });
 
   return (
-    <div className="flex flex-col bg-white w-full pt-6 px-32">
+    <div className="flex flex-col bg-white w-full lg:pt-6 px-4 lg:px-32">
       <Link href="/">
         {" "}
         <div className="flex flex-row mt-3 gap-8 items-center">
@@ -103,8 +103,8 @@ function CreateAccount() {
           <span className="font-bold text-2xl">Go Back</span>
         </div>
       </Link>
-      <div className="flex flex-row w-[75.75] px-6 gap-10 h-[45.75] items-center text-center justify-center bg-white rounded-xl mt-11 border-2 shadow-xl">
-        <div className="bg-white text-left w-1/2 px-8">
+      <div className="flex flex-row lg:w-[75.75] w-full px-6 gap-10 h-[45.75] items-center text-center justify-center bg-white rounded-xl mt-11 border-2 shadow-xl">
+        <div className="bg-white text-left w-1/2 px-4 lg:px-8">
           <div className="flex w-[8.7rem] items-center mt-6 text-center justify-center mb-4">
             <div className="w-full">
               <Image src={Logo} alt="kpangba Logo" width={40} height={40} />
@@ -288,7 +288,7 @@ function CreateAccount() {
             </button>
           </form>
         </div>
-        <div className="bg-[#2B5F2B] mr-4 pl-14 rounded-xl flex flex-col items-start text-start justify-start w-1/2">
+        <div className="bg-[#2B5F2B] hidden lg:block mr-4 pl-14 rounded-xl flex-col items-start text-start justify-start w-1/2">
           <div className="flex flex-col mt-16 text-left">
             <span className="text-[#fff] text-[28px] font-semibold">
               Helping users solve <br />

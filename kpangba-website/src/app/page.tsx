@@ -34,11 +34,11 @@ export default function Home() {
     getResturants();
   }, [location]);
   return (
-    <main className="flex min-h-screen flex-col">
-      <div className="px-16">
+    <main className="flex overflow-hidden w-full min-h-screen flex-col">
+      <div className="lg:px-16 px-2 w-full">
         <NavBar />
         <HeroSection location={location} setLocation={setLocation} loading={loading} restuarants={restuarants} />
-        <PopularLocation />
+        <PopularLocation   />
         <HealthCard />
       </div>
       <Royalty />
