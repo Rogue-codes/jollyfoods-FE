@@ -7,13 +7,13 @@ import { Card1 } from '@/assets';
 
 function HealthCard() {
   const [cardRef, cardInView] = useInView({
-    // triggerOnce: true
-    threshold: 0.2 
+    triggerOnce: true,
+    threshold: 0.9
   });
 
   const [imageRef, imageInView] = useInView({
-    // triggerOnce: true 
-    threshold: 0.2
+    triggerOnce: true,
+    threshold: 0.9
   });
 
   return (

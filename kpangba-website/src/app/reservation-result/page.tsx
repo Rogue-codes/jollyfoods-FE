@@ -163,7 +163,7 @@ function ReservationResult() {
           </div>
         </div>
         <div className="second flex flex-col gap-4 lg:w-[56.7rem] w-full">
-          <p className="bg-[#FEF8D2] mt-5 mb-2 text-sm lg:text-2xl font-semibold text-[#302929] items-center text-center justify-center rounded-lg border border-[#D0B61B] lg:w-[21rem] w-full py-3">
+          <p className="bg-[#FEF8D2] mt-5 mb-2 text-sm lg:text-2xl font-semibold text-[#302929] items-center text-center justify-center rounded-lg border border-[#D0B61B] lg:w-[28rem] w-full py-3">
             <strong>{restaurant?.length}</strong> Kpangba food on wheels in
             Lagos
           </p>

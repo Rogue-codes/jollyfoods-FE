@@ -50,28 +50,27 @@ function VerifyLoginPage() {
   };
 
   return (
-    <div className="flex flex-col bg-white w-full pt-6 px-32">
+    <div className="flex flex-col bg-white w-full pt-3 p-4 lg:px-32">
       <Link href="/create-account">
-        {" "}
-        <div className="flex flex-row mt-8 gap-8 items-center">
+        <div className="flex flex-row mt-5 gap-4 lg:gap-8 items-center">
           <ArrowLeft />
-          <span className="font-bold text-2xl">Go Back</span>
+          <span className="font-bold text-lg lg:text-2xl">Go Back</span>
         </div>
       </Link>
-      <div className="flex flex-row w-[75.75] px-6 gap-10 h-[45.75] items-center text-center justify-center py-8 bg-white rounded-xl mt-11 border-2 shadow-xl">
-        <div className="bg-white text-left w-1/2 px-8">
-          <div className="flex w-[8.7rem] items-center mt-14 text-center justify-center mb-4">
-            <div className="w-full">
-              <Image src={Logo} alt="kpangba Logo" width={40} height={40} />
+      <div className="flex flex-col lg:flex-row lg:w-[75.75] w-full lg:px-6 px-2 gap-10 h-[45.75] items-start text-start justify-start lg:items-center lg:text-center lg:justify-center py-8 rounded-xl mt-8 border-2 shadow-xl">
+        <div className="bg-white text-left w-full lg:w-1/2 px-4 lg:px-8">
+          <div className="flex gap-5 items-center mt-8 text-start justify-start mb-9">
+            <div className="w-[40px] h-[40px]">
+              <Image src={Logo} alt="kpangba Logo" className="w-full" />
             </div>
             <span className="text-[20px] font-semibold">Kpanbga</span>
           </div>
           <div className="flex flex-col items-start justify-start text-center">
-            <span className="text-[#302929] text-[32px] font-bold">
+            <span className="text-[#302929] text-lg lg:text-[32px] font-bold">
               Verify it's you
             </span>
-            <span className="text-[#302929] mt-5 text-base font-normal">
-              Enter code sent to your e-mail and phone number
+            <span className="text-[#302929] mt-5 text-sm lg:text-base font-normal">
+              Enter code sent to your e-mail
             </span>
           </div>
           <form
@@ -81,19 +80,19 @@ function VerifyLoginPage() {
           >
             <OtpInput value={otp} valueLength={4} onChange={onChange} />
             <div className="flex gap-14 mt-12 items-start text-center justify-start">
-              <span className="text-[#2B5F2B] text-base font-normal cursor-pointer">
+              <span className="text-[#2B5F2B] text-sm lg:text-base font-normal cursor-pointer">
                 Resend code
               </span>
-              <span className="text-[#302929] text-base font-normal">
+              <span className="text-[#302929] text-sm lg:text-base font-normal">
                 00:60 secs
               </span>
             </div>
-            <button disabled={otp.length < 4}  className="bg-[#2B5F2B] flex items-center justify-center text-center mb-5 mt-24 text-[#ffff] w-full py-3 rounded-3xl font-normal text-base disabled:cursor-not-allowed disabled:opacity-50 ">
+            <button disabled={otp.length < 4}  className="bg-[#2B5F2B] flex items-center justify-center text-center mb-5 mt-12 text-[#ffff] w-full py-3 rounded-3xl font-normal text-base disabled:cursor-not-allowed disabled:opacity-50 ">
               {loading ? "Loading..." : "Verify Code"}
             </button>
           </form>
         </div>
-        <div className="bg-[#2B5F2B] mr-4 pl-14 rounded-xl flex flex-col items-start text-start justify-start w-1/2">
+        <div className="bg-[#2B5F2B] hidden mr-4 pl-14 rounded-xl lg:block flex-col items-start text-start justify-start w-1/2">
           <div className="flex flex-col mt-16 text-left">
             <span className="text-[#fff] text-[28px] font-semibold">
               e-health card <br />

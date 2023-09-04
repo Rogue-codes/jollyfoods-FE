@@ -20,7 +20,7 @@ function ReuseableCard1({ text1, text2, text3, img, icon }: containerProps) {
                 <div>
                     {icon} <div>{text3}</div>
                 </div>
-                <div className="w-[100%] flex items-center justify-center text-center bg-[#2B5F2B] px-4 py-3 rounded-2xl">
+                <div className="w-[50%] flex items-center justify-center text-center bg-[#2B5F2B] px-4 py-3 rounded-2xl">
                     <button className='text-white font-normal text-base'>Reserve</button>
                 </div>
             </div>
