@@ -64,32 +64,32 @@ function SignInPage() {
   });
 
   return (
-    <div className="flex flex-col bg-white w-full py-6 px-32">
+    <div className="flex flex-col bg-white w-full py-3 px-4 lg:px-32">
       <Link href="/">
         {" "}
-        <div className="flex flex-row mt-8 gap-8 items-center">
+        <div className="flex flex-row mt-4 gap-8 items-center">
           <ArrowLeft />
           <span className="font-bold text-2xl">Go Back</span>
         </div>
       </Link>
-      <div className="flex flex-row w-[75.75] px-6 gap-10 h-[45.75] items-center text-center justify-center py-8 bg-white rounded-xl mt-11 border-2 shadow-xl">
-        <div className="bg-white text-left w-1/2 px-8">
-          <div className="flex w-[8.7rem] items-center mt-14 text-center justify-center mb-4">
-            <div className="w-full">
-              <Image src={Logo} alt="kpangba Logo" width={40} height={40} />
+      <div className="flex flex-row lg:w-[75.75] w-full px-3 lg:px-6 gap-10 h-[45.75] items-start text-start justify-start py-4 bg-white rounded-xl mt-7 border-2 shadow-xl">
+        <div className="bg-white text-left w-full lg:w-1/2 px-3 lg:px-8">
+          <div className="flex  gap-6 items-center mt-2 text-start justify-start mb-4">
+            <div className="w-[40px] h-[40px]">
+              <Image src={Logo} alt="kpangba Logo"  className="w-full" />
             </div>
-            <span className="text-[20px] font-semibold">Kpanbga</span>
+            <span className="lg:text-xl text-lg font-semibold">Kpanbga</span>
           </div>
           <div className="flex flex-col items-start justify-start text-center">
-            <span className="text-[#302929] text-[32px] font-bold">
+            <span className="text-[#302929] text-xl lg:text-[32px] font-bold">
               Hi Welcome back
             </span>
             <span className="text-[#302929] mt-5 text-base font-normal">
               Login with your emil
             </span>
           </div>
-          <form action="" className="mt-10" onSubmit={formik.handleSubmit}>
-            <div className="w-full text-left mb-8">
+          <form action="" className="mt-6" onSubmit={formik.handleSubmit}>
+            <div className="w-full text-left mb-6">
               <label className="block text-[#302929] text-base font-normal mb-2">
                 Email
               </label>
@@ -139,13 +139,13 @@ function SignInPage() {
             )}
             <button
               type="submit"
-              className="bg-[#2B5F2B] mb-5 mt-3 text-[#ffff] w-full py-3 rounded-3xl font-normal text-base"
+              className="bg-[#2B5F2B] mb-1 mt-3 text-[#ffff] w-full py-3 rounded-3xl font-normal text-base"
             >
               {loading ? "Loading..." : "Log in"}
             </button>
           </form>
         </div>
-        <div className="bg-[#2B5F2B] mr-4 pl-14 rounded-xl flex flex-col items-start text-start justify-start w-1/2">
+        <div className="bg-[#2B5F2B] hidden mr-4 pl-14 rounded-xl lg:block flex-col items-start text-start justify-start w-1/2">
           <div className="flex flex-col mt-16 text-left">
             <span className="text-[#fff] text-[28px] font-semibold">
               e-health card <br />

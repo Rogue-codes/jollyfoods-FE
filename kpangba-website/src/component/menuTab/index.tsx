@@ -9,7 +9,7 @@ interface MenuProps{
 
 export default function MenuTab({tabOptions,setActiveTab,activeTab}:MenuProps) {
   return (
-    <div className='border-b-4 relative my-9 pb-2 border-[#E2E9E2] flex justify-between w-[180%]'>
+    <div className='border-b-4 relative my-9 pb-2 border-[#E2E9E2] flex justify-between lg:w-[180%] w-full'>
       {
         tabOptions?.map((tab,index)=>(
           <p className='textlg cursor-pointer font-semibold text-[#302929]' onClick={()=>setActiveTab(index)}>

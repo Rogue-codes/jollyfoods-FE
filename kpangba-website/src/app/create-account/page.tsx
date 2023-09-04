@@ -95,23 +95,23 @@ function CreateAccount() {
   });
 
   return (
-    <div className="flex flex-col bg-white w-full pt-6 px-32">
+    <div className="flex flex-col bg-white w-full lg:pt-6 px-4 lg:px-32">
       <Link href="/">
         {" "}
-        <div className="flex flex-row mt-3 gap-8 items-center">
+        <div className="flex flex-row lg:mt-3 mt-10 lg:gap-8 gap-5 items-center">
           <ArrowLeft />
-          <span className="font-bold text-2xl">Go Back</span>
+          <span className="font-bold lg:text-2xl text-lg ">Go Back</span>
         </div>
       </Link>
-      <div className="flex flex-row w-[75.75] px-6 gap-10 h-[45.75] items-center text-center justify-center bg-white rounded-xl mt-11 border-2 shadow-xl">
-        <div className="bg-white text-left w-1/2 px-8">
-          <div className="flex w-[8.7rem] items-center mt-6 text-center justify-center mb-4">
-            <div className="w-full">
-              <Image src={Logo} alt="kpangba Logo" width={40} height={40} />
+      <div className="flex lg:flex-row flex-col lg:w-[75.75] w-full lg:px-6 px-1 gap-10 h-[45.75] lg:items-center items-start lg:text-center text-center lg:justify-center justify-start rounded-xl mt-11 border-2 shadow-xl">
+        <div className="text-left lg:w-1/2 w-full px-4 lg:px-8">
+          <div className="flex lg:w-[8.7rem] w-full text-start justify-start items-start lg:items-center mt-6 lg:text-center lg:justify-center gap-6 mb-4">
+            <div className="w-[60px] h-[60px]">
+              <Image src={Logo} alt="kpangba Logo" className="w-full h-full" />
             </div>
-            <span className="text-[20px] font-semibold">Kpanbga</span>
+            <div className="text-[20px] font-semibold">Kpanbga</div>
           </div>
-          <span className="text-[#302929] text-[32px] font-bold">
+          <span className="text-[#302929] lg:text-[32px] text-lg font-bold">
             Lets create your account
           </span>
           <form action="" className="mt-10" onSubmit={formik.handleSubmit}>
@@ -288,7 +288,8 @@ function CreateAccount() {
             </button>
           </form>
         </div>
-        <div className="bg-[#2B5F2B] mr-4 pl-14 rounded-xl flex flex-col items-start text-start justify-start w-1/2">
+
+        <div className="bg-[#2B5F2B] hidden lg:block mr-4 pl-14 rounded-xl flex-col items-start text-start justify-start w-1/2">
           <div className="flex flex-col mt-16 text-left">
             <span className="text-[#fff] text-[28px] font-semibold">
               Helping users solve <br />

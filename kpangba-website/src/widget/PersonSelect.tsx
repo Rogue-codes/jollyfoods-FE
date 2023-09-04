@@ -2,7 +2,7 @@ import { useAuth } from "@/context/AuthContext";
 import { User } from "iconsax-react";
 import React, { useState } from "react";
 
-export default function PersonSelect() {
+export default function  PersonSelect() {
   const { adult, child, handleIncrement, handleDecrement } = useAuth();
   const [showSelector, setShowSeletor] = useState<boolean>(false);
   return (
@@ -15,7 +15,7 @@ export default function PersonSelect() {
         className="w-full flex justify-between items-center bg-white rounded-lg"
         onClick={() => setShowSeletor(!showSelector)}
       >
-        <User size={20} />{" "}
+       <div className="hidden lg:block"><User size={20} /></div> 
         <p>
           <strong>{adult}</strong> Adult
         </p>{" "}
@@ -25,19 +25,19 @@ export default function PersonSelect() {
       </div>
 
       {showSelector && (
-        <div className="w-full p-5 absolute left-0 top-16 shadow-[rgba(0,0,0,0.25)_0px_25px_50px_12px] bg-white z-10">
+        <div className="w-full lg:p-5 p-2 absolute left-0 top-16 shadow-[rgba(0,0,0,0.25)_0px_25px_50px_12px] bg-white z-10">
           <div className="flex justify-between">
             <p>Adult</p>
-            <div className="flex justify-evenly items-center gap-5">
+            <div className="flex ml-3 justify-evenly items-center gap-3">
               <div
-                className="w-8 h-8 cursor-pointer flex justify-center items-center border border-[#2B5F2B] text-[#2B5F2B] rounded-lg"
+                className="lg:w-8 lg:h-8 w-5 h-5 cursor-pointer flex justify-center items-center border border-[#2B5F2B] text-[#2B5F2B] rounded-lg"
                 onClick={() => handleDecrement("adult")}
               >
                 -
               </div>
               <p>{adult}</p>
               <div
-                className="w-8 h-8 cursor-pointer flex justify-center items-center border border-[#2B5F2B] text-[#2B5F2B] rounded-lg "
+                className="lg:w-8 lg:h-8 w-5 h-5 cursor-pointer flex justify-center items-center border border-[#2B5F2B] text-[#2B5F2B] rounded-lg "
                 onClick={() => handleIncrement("adult")}
               >
                 +
@@ -47,16 +47,16 @@ export default function PersonSelect() {
 
           <div className="flex justify-between mt-5">
             <p>Children</p>
-            <div className="flex justify-evenly items-center gap-5">
+            <div className="flex ml-1 justify-evenly items-center gap-2">
               <div
-                className="w-8 cursor-pointer flex justify-center items-center h-8 border border-[#2B5F2B] text-[#2B5F2B] rounded-lg"
+                className="lg:w-8 w-5 h-5 cursor-pointer flex justify-center items-center lg:h-8 border border-[#2B5F2B] text-[#2B5F2B] rounded-lg"
                 onClick={() => handleDecrement("child")}
               >
                 -
               </div>
               <p>{child}</p>
               <div
-                className="w-8 h-8 cursor-pointer flex justify-center items-center border border-[#2B5F2B] text-[#2B5F2B] rounded-lg"
+                className="lg:w-8 lg:h-8 w-5 h-5 cursor-pointer flex justify-center items-center border border-[#2B5F2B] text-[#2B5F2B] rounded-lg"
                 onClick={() => handleIncrement("child")}
               >
                 +

@@ -10,6 +10,7 @@ import {
   ArrowLeft2,
   Backward,
   Clock,
+  CloseSquare,
   Location,
   Star1,
   User,
@@ -57,7 +58,7 @@ export default function Resturant({ params }: PageProps) {
     );
   } else if (activeTab === 1) {
     menuContent = (
-      <DinnerList activeTab={activeTab} tabOptions={result?.menu} />
+      <LunchList activeTab={activeTab} tabOptions={result?.menu} />
     );
   } else {
     menuContent = (
@@ -95,33 +96,33 @@ export default function Resturant({ params }: PageProps) {
           <p>Loading...</p>
         </div>
       ) : (
-        <div className="section1 mt-[8rem] px-16 flex flex-col items-start justify-start text-start">
-          <p className="text-[#302929] font-semibold text-xl mb-6">
+        <div className="section1 mt-[8rem] px-4 lg:px-16 flex flex-col items-start justify-start text-start">
+          <p className="text-[#302929] font-semibold lg:text-xl text-base lg:mb-6 mb-4">
             {result?.resturant_name}
           </p>
-          <div className="flex gap-16 items-center text-center justify-center">
+          <div className="flex lg:gap-16 gap-7 items-center text-center justify-center">
             <div className="flex gap-2 items-center text-center justify-center bg-[#FEFAE1] p-2 rounded-xl">
-              <Star1 variant="Bold" color="#D0B61C" size="20" />
-              <span className="text-[#302929] font-normal text-base">
+             <div><Star1 variant="Bold" color="#D0B61C" size="20" /></div>
+              <span className="text-[#302929] font-normal lg:text-base text-sm">
                 {result?.rating}
               </span>
             </div>
-            <div className="flex gap-4 items-center text-center justify-center">
-              <Location variant="Linear" color="#302929" size="20" />
-              <span className="text-[#302929] font-normal text-base">
+            <div className="flex gap-2 lg:gap-4 items-start text-start justify-start">
+             <div><Location variant="Linear" color="#302929" size="20" /></div> 
+              <div className="text-[#302929] font-normal text-sm lg:text-base">
                 {result?.location_meta?.address}
-              </span>
+              </div>
             </div>
           </div>
-          <div className="gap-3 mt-10 w-[74rem] items-center justify-center text-center flex flex-row">
-            <div className=" w-[36.75rem] h-[14.9rem] ">
+          <div className="gap-3 mt-10 lg:w-[74rem] w-full items-center justify-center text-center flex flex-row">
+            <div className=" w-[36.75rem] h-[10rem] lg:h-[14.9rem] ">
               <Image
                 src={RestaurantPic}
                 alt=""
                 className="w-full h-full object-cover rounded-xl"
               />
             </div>
-            <div className="w-[36.75rem] h-[14.9rem]">
+            <div className="w-[36.75rem] h-[10rem] lg:h-[14.9rem]">
               <Image
                 src={RestaurantPic}
                 alt=""
@@ -129,9 +130,9 @@ export default function Resturant({ params }: PageProps) {
               />
             </div>
           </div>
-          <div className="flex justify-between gap-80 mt-10 w-full">
+          <div className="flex flex-col lg:flex-row lg:justify-between gap-54 lg:gap-80 mt-10 w-full">
             <div className="">
-              <p className="text-[#302929] font-semibold text-3xl">
+              <p className="text-[#302929] font-semibold text-base lg:text-3xl">
                 Today’s Menu
               </p>
               <MenuTab
@@ -141,15 +142,15 @@ export default function Resturant({ params }: PageProps) {
               />
               <div className="absolute z-20">{menuContent}</div>
             </div>
-            <div className="w-[25rem] h-[20rem] mt-8 pl-8 flex flex-col items-start text-start justify-start border border-[#E2E9E2] bg-white rounded-2xl">
-              <span className="font-semibold mt-10 text-xl text-[#302929]">
+            <div className="lg:w-[25rem] w-full lg:h-[25rem] h-full lg:mt-8 mt-60 lg:pl-8  pl-0 flex flex-col items-start text-start justify-start border border-[#E2E9E2] bg-white rounded-2xl">
+              <span className="font-semibold ml-4 lg:ml-0 mt-10 text-xl text-[#302929]">
                 N{result?.price_per_person.toLocaleString()}
                 <span className="font-normal ml-3 text-base text-[#302929]">
-                  per Buffets
+                  per Buffet
                 </span>
               </span>
-              <div className="flex mt-8 w-full items-start justify-start gap-32 text-start">
-                <div>
+              <div className="flex mt-8 ml-4 lg:ml-0 w-full items-start justify-start gap-2 lg:gap-20 text-start">
+                <div className="flex flex-col gap-2 items-start text-start justify-start">
                   <div className="font-normal gap-4 text-base text-[#302929] flex items-center justify-center text-center">
                     <User variant="Linear" size="20px" color="#302929" />
                     <span>{adult} Adult</span> <br />
@@ -161,7 +162,6 @@ export default function Resturant({ params }: PageProps) {
                     </div>
                   )}
                 </div>
-
                 <div className="font-normal gap-4 text-base text-[#302929] flex items-center justify-center text-center">
                   <div className="w-full bg-[#D0B61C] rounded-lg text-white relative">
                     <input
@@ -175,11 +175,11 @@ export default function Resturant({ params }: PageProps) {
                   </div>
                 </div>
               </div>
-              <div className="mt-8 w-[50%] bg-[#FEFAE1] p-3 rounded-lg text-black">
+              <div className="mt-8 lg:w-[50%] w-[75%] ml-4 lg:ml-0 bg-[#FEFAE1] p-3 rounded-lg text-black">
                 Meal Type: {mealType}
               </div>
               <button
-                className="bg-[#2B5F2B] hover:scale-105 transition-all w-[17rem] mt-8 text-white font-normla text-xl rounded-3xl py-3 px-4 cursor-pointer"
+                className="bg-[#2B5F2B] flex items-center justify-center hover:scale-105 transition-all w-full lg:w-[17rem] mt-8 text-white font-normal text-base lg:text-xl rounded-3xl mb-5 lg:mb-0 py-3 px-4 cursor-pointer "
                 onClick={() => setShowModal(true)}
               >
                 Continue to checkout
@@ -188,33 +188,33 @@ export default function Resturant({ params }: PageProps) {
           </div>
           {showModal && (
             <Backdrop>
-              <div className="w-[80%] rounded-[20px] overflow-y-scroll px-5 py-14 bg-white z-20">
-                <div className="flex justify-start gap-4 items-center">
-                  <ArrowLeft2
-                    className="cursor-pointer hover:scale-110 transition-all"
+              <div className="lg:w-[80%] w-[95%] mt-28 rounded-[20px] overflow-y-scroll scrollbar-none px-5 lg:py-14 py-10 bg-white z-20">
+                <div className="flex justify-start gap-4 items-center" >
+                  <CloseSquare variant="Bold" color="#302929" size="32"  
+                    className="cursor-pointer hover:scale-110  transition-all"
                     onClick={() => setShowModal(false)}
                   />
-                  <p className="text-2xl text-[#302929]">Make Payment</p>
+                  <p className="lg:text-2xl text-xl text-[#302929]">Make Payment</p>
                 </div>
-                <div className="mt-12 flex flex-col">
-                  <div className="first flex flex-col border-b-4 border-[#F7F8F7] w-[70%] pb-12 justify-start items-start text-start">
-                    <div className="bg-[#FEFAE1] w-[90%] px-5 flex justify-between items-center border-[#D0B61C] text-[#302929]  py-2 border rounded-[14px] text-xl font-normal">
+                <div className="lg:mt-12 mt-6 flex flex-col">
+                  <div className="first flex flex-col border-b-2 border-[#F7F8F7] w-full lg:w-[70%] pb-4 lg:pb-12 justify-start items-start text-start">
+                    <div className="bg-[#FEFAE1] w-full lg:w-[90%] px-5 flex justify-between items-center border-[#D0B61C] text-[#302929]  py-2 border rounded-[14px] text-sm lg:text-xl font-normal">
                       <p>Your order only serves for {adult + child} {adult+child > 1 ? "persons" : "person"}</p>
                     </div>
-                    <p className="text-[#302929] mt-6 text-xl font-semibold">
+                    <p className="text-[#302929] mt-6 text-lg lg:text-xl font-semibold">
                       your order
                     </p>
-                    <p className="text-[#302929] mt-8 text-xl font-semibold">
+                    <p className="text-[#302929] mt-3 lg:mt-5 text-base lg:text-xl font-semibold">
                       Breakfast Buffet
                     </p>
-                    <span className="text-[#302929] -mt-1 text-base font-normal">
+                    <span className="text-[#302929] mt-1 text-sm lg:text-base font-normal">
                       Fried yam, Fish stew, Orange juice
                     </span>
                   </div>
                 </div>
-                <div className="mt-7 border-b-4 border-[#F7F8F7] w-[70%] pb-12  flex flex-col">
+                <div className="mt-7 border-b-2 border-[#F7F8F7] w-full lg:w-[70%] pb-6 lg:pb-12  flex flex-col">
                   <div className="first flex flex-col justify-start items-start text-start">
-                    <span className=" text-[#302929] text-xl font-semibold">
+                    <span className=" text-[#302929] text-base lg:text-xl font-semibold">
                       How would you like to pay
                     </span>
                     <div className="mt-2 flex items-center gap-4">
@@ -227,10 +227,10 @@ export default function Resturant({ params }: PageProps) {
                         )}
                       </div>
                       <div className="flex flex-col items-start justify-start text-start text-[#302929]">
-                        <span className="text-xl font-semibold">
+                        <span className="lg:text-xl text-base font-semibold">
                           Full payment
                         </span>
-                        <span className="text-base font-normal">
+                        <span className="lg:text-base text-sm font-normal">
                           Make total payment, you only need to present receipt
                           at the restaurant
                         </span>
@@ -246,44 +246,43 @@ export default function Resturant({ params }: PageProps) {
                         )}
                       </div>
                       <div className="flex flex-col items-start justify-start text-start text-[#302929]">
-                        <span className="text-xl font-semibold">
+                        <span className="lg:text-xl text-base font-semibold">
                           Pay part, balance at the restaurant
                         </span>
-                        <span className="text-base font-normal">
+                        <span className="lg:text-base text-sm font-normal">
                           Make half payment,Balance at the restaurant
                         </span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="flex border-b-4 border-[#F7F8F7] w-[70%] pb-12  flex-col mt-5">
-                  <span className="text-[#302929] text-xl font-semibold">
+                <div className="flex border-b-2 border-[#F7F8F7] w-full lg:w-[70%] pb-8 text-start justify-start items-start lg:pb-12  flex-col mt-5">
+                  <div className="text-[#302929] text-base lg:text-xl font-semibold">
                     Price
-                  </span>
-                  <div className="flex items-center text-start justify-start gap-28">
-                    <span className="font-semibold mt-3 text-xl text-[#302929]">
+                  </div>
+                  <div className="flex items-center text-start justify-start gap-10 lg:gap-28">
+                    <div className="font-semibold flex gap-2 mt-3 text-base lg:text-xl text-[#302929]">
                       {result?.price_per_person}
-                      <span className="font-normal ml-3 text-base text-[#302929]">
+                      <div className="font-normal ml-0 lg:ml-3 text-base text-[#302929]">
                         per Buffets
-                      </span>
-                    </span>
-                    <span className="text-2xl font-normal text-[#2B5F2B]">
+                      </div>
+                    </div>
+                    <div className="lg:text-2xl text-lg font-normal text-[#2B5F2B]">
                       x {adult + child}
-                    </span>
+                    </div>
                   </div>
                 </div>
                 <div className="mt-4 flex flex-col items-start justify-start text-center">
-                  <span className="text-[#302929] text-xl font-semibold">
+                  <div className="text-[#302929] text-base lg:text-xl font-semibold">
                     Pay with
-                  </span>
-                  <div className="w-36 h-20">
+                  </div>
+                  <div className="w-36 h-20 mt-5">
                     <Image src={Paystack} alt="" className="object-cover" />
                   </div>
                 </div>
-
                 <button
                   type="button"
-                  className="inline-flex mb-4 px-24 justify-center rounded-2xl bg-[#2B5F2B]  py-4 hover:scale-105 transition-all text-sm font-normal text-white  "
+                  className="inline-flex mb-4 px-24 mt-5 justify-center rounded-2xl bg-[#2B5F2B]  py-4 hover:scale-105 transition-all text-sm font-normal text-white  "
                   onClick={close}
                 >
                   Continue

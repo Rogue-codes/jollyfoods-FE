@@ -121,7 +121,7 @@ export default function CustomSelect({
   };
 
   const formatGroupLabel = (data: any) => (
-    <div className="text-blue-600 flex justify-center">
+    <div className="text-[#302929] flex justify-center">
       <h3 className="text-center py-1 normal-case">{data.label}</h3>
     </div>
   );
