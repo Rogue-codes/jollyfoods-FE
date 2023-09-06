@@ -41,7 +41,7 @@ function ResultCard({ item }: containerProps) {
           </div>
           <div className="px-4 flex items-center justify-center text-center bg-[#FEFAE1] rounded-3xl">
             <div className="text-base font-normal">
-              ₦{item.price_per_person.toLocaleString()}
+              ₦{item.price_per_adult.toLocaleString()}
             </div>
           </div>
           <button

@@ -8,7 +8,7 @@ export interface UserProps {
   isVerified: boolean;
   name: string;
   phoneNumber: string;
-  user_id: string;
+  id: string;
 }
 
 export interface RestaurantType {
@@ -29,14 +29,13 @@ export interface RestaurantType {
   rating: number;
   open_time: string;
   close_time: string;
-  price_per_person: number;
-  menu: [
-    {
+  price_per_adult: number,
+  price_per_child: number,
+  menu: {
       meal_type: string;
       meals: string[];
       _id: string;
-    }
-  ];
+    }[]
 }
 
 export interface TabOptions {

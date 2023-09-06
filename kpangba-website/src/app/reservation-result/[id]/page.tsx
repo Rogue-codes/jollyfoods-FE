@@ -21,6 +21,7 @@ import { RestaurantType } from "@/interface";
 import MenuTab from "@/component/menuTab";
 import { useAuth } from "@/context/AuthContext";
 import Backdrop from "@/widget/modal/Backdrop";
+import { toast } from "react-toastify";
 
 interface PageProps {
   params: { id: string };
@@ -28,6 +29,7 @@ interface PageProps {
 export default function Resturant({ params }: PageProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [result, setResult] = useState<RestaurantType>();
+  const [reservationLoading, setReservationLoading] = useState<boolean>(false);
 
   // make API call of fetch restuurant based on ID
   const fetchRestaurant = async () => {
@@ -57,16 +59,21 @@ export default function Resturant({ params }: PageProps) {
       <BreakFastList activeTab={activeTab} tabOptions={result?.menu} />
     );
   } else if (activeTab === 1) {
-    menuContent = (
-      <LunchList activeTab={activeTab} tabOptions={result?.menu} />
-    );
+    menuContent = <LunchList activeTab={activeTab} tabOptions={result?.menu} />;
   } else {
     menuContent = (
       <DinnerList activeTab={activeTab} tabOptions={result?.menu} />
     );
   }
 
-  const { reservationTime, handleTimeChange, adult, child } = useAuth();
+  const {
+    reservationTime,
+    handleTimeChange,
+    adult,
+    child,
+    reservationDate,
+    kpangba_user,
+  } = useAuth();
 
   const getMealType = (time: string): string => {
     const hour = parseInt(time.split(":")[0]);
@@ -80,13 +87,41 @@ export default function Resturant({ params }: PageProps) {
     }
   };
 
-  const [error, setError] = useState<string | null>();
-  const [isError, setIsError] = useState<boolean>(false);
   const mealType = getMealType(reservationTime);
 
   const [showModal, setShowModal] = useState(false);
 
-  const [paymentType, setPaymentType] = useState<string>("");
+  const [paymentType, setPaymentType] = useState<string>("full");
+
+  console.log(result?.menu.length);
+
+  const handleResrvation = async () => {
+    try {
+      if (!paymentType) {
+        toast.error("Please select payment type");
+      } else {
+        setReservationLoading(true);
+        const res = await ApiFetcher.post("/reservation/create", {
+          resturant_id: result?._id,
+          booked_date: reservationDate,
+          booked_time: reservationTime,
+          number_of_seats: adult + child,
+          customer_id: kpangba_user?.id,
+          adult: adult,
+          amount: result && (result?.price_per_adult * adult) + (result?.price_per_child * child),
+          payment_type: paymentType,
+        });
+        setReservationLoading(false);
+        toast.success(res?.data?.data?.message);
+      }
+    } catch (error: any) {
+      setReservationLoading(false);
+      toast.error(error?.response?.data?.message);
+      console.log(error);
+    }
+  };
+
+  const pay_condition: number = paymentType === "full" ? 1 : 2;
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -102,13 +137,17 @@ export default function Resturant({ params }: PageProps) {
           </p>
           <div className="flex lg:gap-16 gap-7 items-center text-center justify-center">
             <div className="flex gap-2 items-center text-center justify-center bg-[#FEFAE1] p-2 rounded-xl">
-             <div><Star1 variant="Bold" color="#D0B61C" size="20" /></div>
+              <div>
+                <Star1 variant="Bold" color="#D0B61C" size="20" />
+              </div>
               <span className="text-[#302929] font-normal lg:text-base text-sm">
                 {result?.rating}
               </span>
             </div>
             <div className="flex gap-2 lg:gap-4 items-start text-start justify-start">
-             <div><Location variant="Linear" color="#302929" size="20" /></div> 
+              <div>
+                <Location variant="Linear" color="#302929" size="20" />
+              </div>
               <div className="text-[#302929] font-normal text-sm lg:text-base">
                 {result?.location_meta?.address}
               </div>
@@ -144,7 +183,7 @@ export default function Resturant({ params }: PageProps) {
             </div>
             <div className="lg:w-[25rem] w-full lg:h-[25rem] h-full lg:mt-8 mt-60 lg:pl-8  pl-0 flex flex-col items-start text-start justify-start border border-[#E2E9E2] bg-white rounded-2xl">
               <span className="font-semibold ml-4 lg:ml-0 mt-10 text-xl text-[#302929]">
-                N{result?.price_per_person.toLocaleString()}
+                N{result?.price_per_adult.toLocaleString()}
                 <span className="font-normal ml-3 text-base text-[#302929]">
                   per Buffet
                 </span>
@@ -153,12 +192,17 @@ export default function Resturant({ params }: PageProps) {
                 <div className="flex flex-col gap-2 items-start text-start justify-start">
                   <div className="font-normal gap-4 text-base text-[#302929] flex items-center justify-center text-center">
                     <User variant="Linear" size="20px" color="#302929" />
-                    <span>{adult} {adult > 1 ? "Adults" : "Adult"}</span> <br />
+                    <span>
+                      {adult} {adult > 1 ? "Adults" : "Adult"}
+                    </span>{" "}
+                    <br />
                   </div>
                   {child > 0 && (
                     <div className="font-normal gap-4 text-base text-[#302929] flex items-center justify-center text-center">
                       <User variant="Linear" size="20px" color="#302929" />
-                      <span>{child} {child > 1 ? "Children" : "Child"}</span>
+                      <span>
+                        {child} {child > 1 ? "Children" : "Child"}
+                      </span>
                     </div>
                   )}
                 </div>
@@ -189,26 +233,52 @@ export default function Resturant({ params }: PageProps) {
           {showModal && (
             <Backdrop>
               <div className="lg:w-[80%] w-[95%] mt-28 rounded-[20px] overflow-y-scroll scrollbar-none px-5 lg:py-14 py-10 bg-white z-20">
-                <div className="flex justify-start gap-4 items-center" >
-                  <CloseSquare variant="Bold" color="#302929" size="32"  
+                <div className="flex justify-start gap-4 items-center">
+                  <CloseSquare
+                    variant="Bold"
+                    color="#302929"
+                    size="32"
                     className="cursor-pointer hover:scale-110  transition-all"
                     onClick={() => setShowModal(false)}
                   />
-                  <p className="lg:text-2xl text-xl text-[#302929]">Make Payment</p>
+                  <p className="lg:text-2xl text-xl text-[#302929]">
+                    Make Payment
+                  </p>
                 </div>
                 <div className="lg:mt-12 mt-6 flex flex-col">
                   <div className="first flex flex-col border-b-2 border-[#F7F8F7] w-full lg:w-[70%] pb-4 lg:pb-12 justify-start items-start text-start">
                     <div className="bg-[#FEFAE1] w-full lg:w-[90%] px-5 flex justify-between items-center border-[#D0B61C] text-[#302929]  py-2 border rounded-[14px] text-sm lg:text-xl font-normal">
-                      <p>Your order only serves for {adult + child} {adult+child > 1 ? "persons" : "person"}</p>
+                      <p>
+                        Your order only serves for {adult + child}{" "}
+                        {adult + child > 1 ? "persons" : "person"}
+                      </p>
                     </div>
                     <p className="text-[#302929] mt-6 text-lg lg:text-xl font-semibold">
                       your order
                     </p>
                     <p className="text-[#302929] mt-3 lg:mt-5 text-base lg:text-xl font-semibold">
-                      Breakfast Buffet
+                      {mealType} Buffet
                     </p>
                     <span className="text-[#302929] mt-1 text-sm lg:text-base font-normal">
-                      Fried yam, Fish stew, Orange juice
+                      {mealType === "Breakfast"
+                        ? result?.menu?.[0]?.meals?.map((meals, _) => (
+                            <span key={_} className="mx-1">
+                              {meals}
+                            </span>
+                          ))
+                        : mealType === "Lunch"
+                        ? result?.menu?.[1]?.meals?.map((meals, _) => (
+                            <span key={_} className="mx-1">
+                              {meals}
+                            </span>
+                          ))
+                        : mealType === "Dinner"
+                        ? result?.menu?.[2]?.meals?.map((meals, _) => (
+                            <span key={_} className="mx-1">
+                              {meals}
+                            </span>
+                          ))
+                        : null}
                     </span>
                   </div>
                 </div>
@@ -260,18 +330,32 @@ export default function Resturant({ params }: PageProps) {
                   <div className="text-[#302929] text-base lg:text-xl font-semibold">
                     Price
                   </div>
-                  <div className="flex items-center text-start justify-start gap-10 lg:gap-28">
-                    <div className="font-semibold flex gap-2 mt-3 text-base lg:text-xl text-[#302929]">
-                    ₦{result?.price_per_person.toLocaleString()}
-                      <div className="font-normal ml-0 lg:ml-3 text-base text-[#302929]">
+                  <div className="flex items-center text-start justify-start gap-10 lg:gap-28 w-full">
+                    <div className="font-semibold flex gap-2 mt-3 text-sm lg:text-xl text-[#302929]">
+                      ₦{result?.price_per_adult.toLocaleString()} (adults)  x {adult}   -----   ₦{result?.price_per_child.toLocaleString()} (children)  x {child}
+                      <div className="font-normal ml-0 lg:ml-3 text-xs lg:text-base text-[#302929]">
                         per Buffets
                       </div>
                     </div>
-                    <div className="lg:text-2xl text-lg font-normal text-[#2B5F2B]">
-                      x {adult + child}
-                    </div>
                   </div>
-                  <h1 className="font-bold mt-5 text-xl">Total: ₦{(result && result?.price_per_person * (adult + child))?.toLocaleString()}</h1>
+                  <h1 className="font-bold mt-5 text-xl">
+                    Total: ₦
+                    {(
+                      result &&
+                      ((result?.price_per_adult * adult )+ (result?.price_per_child * child)) /
+                        pay_condition
+                    )?.toLocaleString()}
+                  </h1>
+                  {paymentType === "half" && (
+                    <p className="bg-[#FEFAE1] p-2 mt-3">
+                      Pending amount: ₦
+                      {(
+                      result &&
+                      ((result?.price_per_adult * adult )+ (result?.price_per_child * child)) /
+                        pay_condition
+                    )?.toLocaleString()}
+                    </p>
+                  )}
                 </div>
                 <div className="mt-4 flex flex-col items-start justify-start text-center">
                   <div className="text-[#302929] text-base lg:text-xl font-semibold">
@@ -283,10 +367,11 @@ export default function Resturant({ params }: PageProps) {
                 </div>
                 <button
                   type="button"
-                  className="inline-flex mb-4 px-24 mt-5 justify-center rounded-2xl bg-[#2B5F2B]  py-4 hover:scale-105 transition-all text-sm font-normal text-white  "
-                  onClick={close}
+                  className="inline-flex mb-4 px-24 mt-5 justify-center rounded-2xl bg-[#2B5F2B]  py-4 hover:scale-105 transition-all text-sm font-normal text-white disabled:opacity-50 disabled:cursor-not-allowed "
+                  onClick={handleResrvation}
+                  disabled={reservationLoading}
                 >
-                  Continue
+                  {reservationLoading ? "Making reservation..." : "Continue"}
                 </button>
               </div>
             </Backdrop>

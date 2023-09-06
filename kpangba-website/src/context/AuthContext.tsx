@@ -47,12 +47,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [reservationDate, setReservationDate] = useState<Date | null>(null);
   const [location, setLocation] = useState<OptionProps | null>(null);
 
-
-
   function getDefaultTime(): string {
     const now = new Date();
     const currentHours = now.getHours();
-    
+
     if (currentHours >= 18) {
       // If it's past 6 PM, set the default time to 8:00 AM the next day
       now.setDate(now.getDate() + 1);
@@ -61,11 +59,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
       // Otherwise, set it to 1 hour ahead of the current time
       now.setHours(currentHours + 1, 0, 0, 0);
     }
-    
+
     return formatTime(now);
   }
-  
-  const [reservationTime, setReservationTime] = useState<string>(getDefaultTime());
+
+  const [reservationTime, setReservationTime] = useState<string>(
+    getDefaultTime()
+  );
 
   // set date to next day if time is past 6pm
   useEffect(() => {
@@ -88,14 +88,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   // Function to handle changes in the time input
   function handleTimeChange(event: React.ChangeEvent<HTMLInputElement>): void {
     const selectedValue = event.target.value;
-    // Check if the selected time is within the allowed range (8am to 6pm)
-    const selectedTimeParts = selectedValue.split(':');
-    const selectedHours = parseInt(selectedTimeParts[0]);
-    if (selectedHours >= 8 && selectedHours <= 18) {
-      setReservationTime(selectedValue);
-    } else {
-      toast.error('Please select a time between 8am and 6pm.');
-    }
+    setReservationTime(selectedValue);
   }
 
   const login = (user: UserProps) => {
@@ -135,8 +128,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     location,
     setLocation,
     reservationTime,
-    handleTimeChange
-    };
+    handleTimeChange,
+  };
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
