@@ -35,7 +35,7 @@ function VerifyLoginPage() {
     try {
       const res = await ApiFetcher.post("/user/account/verify", {
         otp: otp,
-        user_id: user?.user_id,
+        user_id: user?.id,
       });
       setLoading(false);
       toast.success(res?.data?.message);
