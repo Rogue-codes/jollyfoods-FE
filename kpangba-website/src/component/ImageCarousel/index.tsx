@@ -28,7 +28,7 @@ const ImageGallery: React.FC = () => {
           y: scrollY > 100 ? 0 : 100,
         }}
         transition={{ duration: 0.5 }}
-        className="rounded-xl block  " // Show on mobile, hide on larger screens
+        className="rounded-xl hidden  md:block" // Show on larger screens, hide on mobile
       >
         <Image src={HeroImage1} alt="" width={248} height={217} />
       </motion.div>
@@ -41,7 +41,7 @@ const ImageGallery: React.FC = () => {
           y: scrollY > 200 ? 0 : 100,
         }}
         transition={{ duration: 0.5 }}
-        className="rounded-xl hidden md:block" // Show on larger screens, hide on mobile
+        className="rounded-xl hidden md:block"
       >
         <Image src={HeroImage2} alt="" width={248} height={256} />
       </motion.div>
@@ -52,7 +52,7 @@ const ImageGallery: React.FC = () => {
           y: scrollY > 300 ? 0 : 100,
         }}
         transition={{ duration: 0.5 }}
-        className="rounded-xl hidden md:block" // Show on larger screens, hide on mobile
+        className="rounded-xl block" // Show on mobile, hide on larger screens
       >
         <Image src={HeroImage3} alt="" width={282} height={291} />
       </motion.div>
