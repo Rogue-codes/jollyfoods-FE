@@ -95,10 +95,9 @@ function HeroSection({
           <span>Your first meal secures your health.</span>
         </div>
       </div>
-      <div className="bg-[#FEF8D2] w-full lg:flex lg:flex-row flex-col items-center justify-center text-center gap-4 border lg:p-6 px-2 py-6 mt-12 border-[#D0B61B] lg:h-[6.5rem] rounded-3xl">
+      <div className="bg-[#FEF8D2] w-full lg:w-[90%] mx-auto flex lg:flex-row flex-wrap lg:flex-nowrap items-center justify-center text-center gap-4 border lg:p-6 px-2 py-6 mt-12 border-[#D0B61B] lg:h-[6.5rem] rounded-3xl">
         {/* Location and Date on mobile */}
-        <div className="w-[100%] flex items-center gap-2 lg:gap-4">
-          <div className="w-[50%]">
+          <div className="w-[45%] lg:w-[40%]">
             <CustomSelect
               icon={<Location size="19" variant="Linear" color="#302929" />}
               className="!w-full cursor-pointer rounded-lg h-6"
@@ -108,7 +107,7 @@ function HeroSection({
               value={location}
             />
           </div>
-          <div className="w-[50%]">
+          <div className="w-[45%] lg:w-[30%]">
             <DateSelect
               className="items-center cursor-pointer rounded-lg !w-full h-12"
               placeholderText="Date"
@@ -119,28 +118,25 @@ function HeroSection({
               minDate={new Date()}
             />
           </div>
-        </div>
         {/* Time and Guest on mobile */}
-        <div className="w-[100%] mt-3 mb-4 flex items-center gap-2">
-          <div className="w-[50%] relative">
+        <div className="w-[45%] lg:w-[30%] mt-3 mb-4 flex items-center gap-2">
             <input
               type="time"
               value={reservationTime}
               onChange={handleTimeChange}
-              className="w-full lg:px-2 px-3 lg:py-2.5 py-6  rounded-lg"
+              className="w-full lg:px-2 px-3 lg:py-2.5 p-3  rounded-lg"
               id="reservationTime"
               name="reservationTime"
               min="08:00"
               max="17:00"
               step="3600"
             />
-          </div>
-          <div className="w-[50%]">
+        </div>
+        <div className="w-[45%]">
             <PersonSelect />
           </div>
-        </div>
         {/* Button */}
-        <div className="w-[100%] lg:w-[25%] bg-[#2B5F2B] px-4 py-3 rounded-2xl">
+        <div className="w-[100%] lg:w-[45%] bg-[#2B5F2B] px-4 py-3 rounded-2xl">
           <button
             className="text-white font-normal text-base disabled:cursor-not-allowed disabled:opacity-50"
             onClick={handleClick}

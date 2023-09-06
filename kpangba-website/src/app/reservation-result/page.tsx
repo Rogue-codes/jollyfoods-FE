@@ -12,7 +12,6 @@ import { Clock, Location, Star1, User } from "iconsax-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import TimePicker from "react-time-picker";
 
 function ReservationResult() {
   const [restaurant, setRestaurant] = useState<RestaurantType[] | null>(null);
@@ -34,25 +33,7 @@ function ReservationResult() {
       value: "Yaba",
     }
   ];
-  const [error, setError] = useState<string | null>();
-  const [isError, setIsError] = useState<boolean>(false);
 
-  // const validateTime = (time: string) => {
-  //   const selectedDate = new Date(`2023-09-01T${time}`);
-  //   const startHour = 8;
-  //   const endHour = 18;
-
-  //   if (
-  //     selectedDate.getHours() < startHour ||
-  //     selectedDate.getHours() >= endHour
-  //   ) {
-  //     setError("Time must be between 8:00 AM and 6:00 PM");
-  //     setIsError(true);
-  //   } else {
-  //     setError(null);
-  //     setIsError(false);
-  //   }
-  // };
   const { reservationDate, setReservationDate, location, setLocation, reservationTime, handleTimeChange } =
     useAuth();
 
@@ -67,6 +48,16 @@ function ReservationResult() {
       router.push("/");
     }
   }, []);
+
+  console.log(restaurant)
+
+  const filteredResturant = restaurant?.filter((rst:RestaurantType)=>{
+    if(!location?.value){
+      return rst
+    }else{
+      return rst.location_name === location?.value
+    }
+  })
   return (
     <div className="flex min-h-screen flex-col">
       <NavBar />
@@ -164,12 +155,11 @@ function ReservationResult() {
         </div>
         <div className="second flex flex-col gap-4 lg:w-[56.7rem] w-full">
           <p className="bg-[#FEF8D2] mt-5 mb-2 text-sm lg:text-2xl font-semibold text-[#302929] items-center text-center justify-center rounded-lg border border-[#D0B61B] lg:w-[28rem] w-full py-3">
-            <strong>{restaurant?.length}</strong> Kpangba food on wheels in
-            Lagos
+            <strong>{filteredResturant?.length}</strong> Kpangba food on wheels in  { location ? location.value : "Lagos"}
           </p>
           <div className="border"></div>
           <div className="lg:w-[55rem] w-full rounded-xl shadow-lg lg:px-8 px-2 py-8 lg:py-12 flex flex-col lg:gap-8 gap-7 bg-white">
-            {restaurant?.map((item, index) => (
+            {filteredResturant?.map((item, index) => (
               <ResultCard item={item} key={index} />
             ))}
           </div>

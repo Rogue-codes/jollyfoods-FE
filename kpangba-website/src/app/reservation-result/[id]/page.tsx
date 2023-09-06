@@ -153,7 +153,7 @@ export default function Resturant({ params }: PageProps) {
                 <div className="flex flex-col gap-2 items-start text-start justify-start">
                   <div className="font-normal gap-4 text-base text-[#302929] flex items-center justify-center text-center">
                     <User variant="Linear" size="20px" color="#302929" />
-                    <span>{adult} Adult</span> <br />
+                    <span>{adult} {adult > 1 ? "Adults" : "Adult"}</span> <br />
                   </div>
                   {child > 0 && (
                     <div className="font-normal gap-4 text-base text-[#302929] flex items-center justify-center text-center">
@@ -262,7 +262,7 @@ export default function Resturant({ params }: PageProps) {
                   </div>
                   <div className="flex items-center text-start justify-start gap-10 lg:gap-28">
                     <div className="font-semibold flex gap-2 mt-3 text-base lg:text-xl text-[#302929]">
-                      {result?.price_per_person}
+                    ₦{result?.price_per_person.toLocaleString()}
                       <div className="font-normal ml-0 lg:ml-3 text-base text-[#302929]">
                         per Buffets
                       </div>
@@ -271,6 +271,7 @@ export default function Resturant({ params }: PageProps) {
                       x {adult + child}
                     </div>
                   </div>
+                  <h1 className="font-bold mt-5 text-xl">Total: ₦{(result && result?.price_per_person * (adult + child))?.toLocaleString()}</h1>
                 </div>
                 <div className="mt-4 flex flex-col items-start justify-start text-center">
                   <div className="text-[#302929] text-base lg:text-xl font-semibold">
