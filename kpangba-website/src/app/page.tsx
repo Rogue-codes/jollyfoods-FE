@@ -25,7 +25,6 @@ export default function Home() {
       const res = await ApiFetcher.get(`/resturant/all${searchParams}`);
       setLoading(false)
       setRestuarants(res?.data?.data)
-      console.log(res.data.data);
     } catch (error) {
       setLoading(false)
       console.log(error);

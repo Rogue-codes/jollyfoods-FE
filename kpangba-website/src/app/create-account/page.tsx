@@ -23,7 +23,6 @@ function CreateAccount() {
   const router = useRouter()
   const [insurance, setInsurance] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  console.log(insurance)
 
   const emailRegex = RegExp(/^\S+@\S+\.\S+$/);
   const passwordRegex = RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/)

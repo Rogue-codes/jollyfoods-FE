@@ -47,9 +47,7 @@ export default function Resturant({ params }: PageProps) {
   useEffect(() => {
     fetchRestaurant();
   }, []);
-
-  console.log(result);
-
+  
   const [activeTab, setActiveTab] = useState(0);
 
   let menuContent;
@@ -93,27 +91,24 @@ export default function Resturant({ params }: PageProps) {
 
   const [paymentType, setPaymentType] = useState<string>("full");
 
-  console.log(result?.menu.length);
 
   const handleResrvation = async () => {
+    setReservationLoading(true);
     try {
-      if (!paymentType) {
-        toast.error("Please select payment type");
-      } else {
-        setReservationLoading(true);
-        const res = await ApiFetcher.post("/reservation/create", {
-          resturant_id: result?._id,
-          booked_date: reservationDate,
-          booked_time: reservationTime,
-          number_of_seats: adult + child,
-          customer_id: kpangba_user?.id,
-          adult: adult,
-          amount: result && (result?.price_per_adult * adult) + (result?.price_per_child * child),
-          payment_type: paymentType,
-        });
-        setReservationLoading(false);
-        toast.success(res?.data?.data?.message);
-      }
+      const res = await ApiFetcher.post("/reservation/create", {
+        resturant_id: result?._id,
+        booked_date: reservationDate,
+        booked_time: reservationTime,
+        number_of_seats: adult + child,
+        customer_id: kpangba_user?.id,
+        adult: adult,
+        amount:
+          result &&
+          result?.price_per_adult * adult + result?.price_per_child * child,
+        payment_type: paymentType,
+      });
+      setReservationLoading(false);
+      toast.success(res?.data?.data?.message);
     } catch (error: any) {
       setReservationLoading(false);
       toast.error(error?.response?.data?.message);
@@ -332,7 +327,9 @@ export default function Resturant({ params }: PageProps) {
                   </div>
                   <div className="flex items-center text-start justify-start gap-10 lg:gap-28 w-full">
                     <div className="font-semibold flex gap-2 mt-3 text-sm lg:text-xl text-[#302929]">
-                      ₦{result?.price_per_adult.toLocaleString()} (adults)  x {adult}   -----   ₦{result?.price_per_child.toLocaleString()} (children)  x {child}
+                      ₦{result?.price_per_adult.toLocaleString()} (adults) x{" "}
+                      {adult} ----- ₦{result?.price_per_child.toLocaleString()}{" "}
+                      (children) x {child}
                       <div className="font-normal ml-0 lg:ml-3 text-xs lg:text-base text-[#302929]">
                         per Buffets
                       </div>
@@ -342,7 +339,8 @@ export default function Resturant({ params }: PageProps) {
                     Total: ₦
                     {(
                       result &&
-                      ((result?.price_per_adult * adult )+ (result?.price_per_child * child)) /
+                      (result?.price_per_adult * adult +
+                        result?.price_per_child * child) /
                         pay_condition
                     )?.toLocaleString()}
                   </h1>
@@ -350,10 +348,11 @@ export default function Resturant({ params }: PageProps) {
                     <p className="bg-[#FEFAE1] p-2 mt-3">
                       Pending amount: ₦
                       {(
-                      result &&
-                      ((result?.price_per_adult * adult )+ (result?.price_per_child * child)) /
-                        pay_condition
-                    )?.toLocaleString()}
+                        result &&
+                        (result?.price_per_adult * adult +
+                          result?.price_per_child * child) /
+                          pay_condition
+                      )?.toLocaleString()}
                     </p>
                   )}
                 </div>

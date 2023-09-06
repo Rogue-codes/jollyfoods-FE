@@ -66,8 +66,6 @@ function HeroSection({
 
   const { setReservationDate, reservationDate } = useAuth();
 
-  console.log(reservationDate);
-
   const router = useRouter();
 
   const handleClick = () => {

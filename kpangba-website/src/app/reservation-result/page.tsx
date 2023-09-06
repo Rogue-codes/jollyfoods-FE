@@ -49,7 +49,6 @@ function ReservationResult() {
     }
   }, []);
 
-  console.log(restaurant)
 
   const filteredResturant = restaurant?.filter((rst:RestaurantType)=>{
     if(!location?.value){
