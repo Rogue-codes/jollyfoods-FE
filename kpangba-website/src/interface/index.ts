@@ -43,3 +43,44 @@ export interface TabOptions {
   meals: string[];
   _id: string;
 }
+
+interface Customer {
+  _id: string;
+  name: string;
+  email: string;
+  phoneNumber: string;
+  healthcareServiceProvider: string;
+  isVerified: boolean;
+  __v: number;
+}
+
+
+
+export interface ReservationType {
+  reservation_code: string;
+  restaurant_id: string;
+  booked_date: string; // You might consider using a Date type if you parse it.
+  booked_time: string;
+  CreatedAt: string; // You might consider using a Date type if you parse it.
+  number_of_seats: number;
+  customer_id: string;
+  adult: number;
+  children: number;
+  amount: number;
+  payment_type: string;
+  payment_status: boolean;
+  isCompleted: boolean;
+  _id: string;
+  __v: number;
+  customer: {
+    _id: string;
+    name: string;
+    email: string;
+    phoneNumber: string;
+    healthcareServiceProvider: string;
+    isVerified: boolean;
+    __v: number;
+  }
+  restaurant:RestaurantType
+}
+

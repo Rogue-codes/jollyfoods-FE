@@ -169,7 +169,7 @@ export default function CustomSelect({
             <p
               className={`flex items-center ${hasIconPadding ? "gap-2" : ""} ${
                 textSmall ? "text-sm" : "text-md"
-              } ${!textWhite ? "text-blue-600" : "text-white"}`}
+              } ${!textWhite ? "text-black" : "text-white"}`}
             >
               {hideOptionIcons ? (
                 e.icon || <Location size="32" color="#FF8A65" variant="Bold" />

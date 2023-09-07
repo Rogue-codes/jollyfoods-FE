@@ -17,11 +17,13 @@ import {
 } from "iconsax-react";
 import Link from "next/link";
 import ApiFetcher from "@/utils/api/ApiFetcher";
-import { RestaurantType } from "@/interface";
+import { ReservationType, RestaurantType } from "@/interface";
 import MenuTab from "@/component/menuTab";
 import { useAuth } from "@/context/AuthContext";
 import Backdrop from "@/widget/modal/Backdrop";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import ReservationSuccessModal from "@/widget/modal/ReservationSuccessModal";
 
 interface PageProps {
   params: { id: string };
@@ -30,6 +32,8 @@ export default function Resturant({ params }: PageProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [result, setResult] = useState<RestaurantType>();
   const [reservationLoading, setReservationLoading] = useState<boolean>(false);
+  const [reservationsuccess, setReservationsuccess] = useState<boolean>(false);
+  const [reservationDetails,setReservationDetails] = useState<ReservationType|null>(null);
 
   // make API call of fetch restuurant based on ID
   const fetchRestaurant = async () => {
@@ -47,7 +51,7 @@ export default function Resturant({ params }: PageProps) {
   useEffect(() => {
     fetchRestaurant();
   }, []);
-  
+
   const [activeTab, setActiveTab] = useState(0);
 
   let menuContent;
@@ -91,24 +95,30 @@ export default function Resturant({ params }: PageProps) {
 
   const [paymentType, setPaymentType] = useState<string>("full");
 
-
+  const router = useRouter();
   const handleResrvation = async () => {
     setReservationLoading(true);
     try {
-      const res = await ApiFetcher.post("/reservation/create", {
-        resturant_id: result?._id,
-        booked_date: reservationDate,
-        booked_time: reservationTime,
-        number_of_seats: adult + child,
-        customer_id: kpangba_user?.id,
-        adult: adult,
-        amount:
-          result &&
-          result?.price_per_adult * adult + result?.price_per_child * child,
-        payment_type: paymentType,
-      });
-      setReservationLoading(false);
-      toast.success(res?.data?.data?.message);
+      if (!kpangba_user) {
+        router.push("/create-account");
+      } else {
+        const res = await ApiFetcher.post("/reservation/create", {
+          resturant_id: result?._id,
+          booked_date: reservationDate,
+          booked_time: reservationTime,
+          number_of_seats: adult + child,
+          customer_id: kpangba_user?.id,
+          adult: adult,
+          amount:
+            result &&
+            result?.price_per_adult * adult + result?.price_per_child * child,
+          payment_type: paymentType,
+        });
+        toast.success(res?.data?.message);
+        setReservationLoading(false);
+        setReservationDetails(res?.data?.data?.reservation)
+        setReservationsuccess(true);
+      }
     } catch (error: any) {
       setReservationLoading(false);
       toast.error(error?.response?.data?.message);
@@ -226,153 +236,158 @@ export default function Resturant({ params }: PageProps) {
             </div>
           </div>
           {showModal && (
-            <Backdrop>
-              <div className="lg:w-[80%] w-[95%] mt-28 rounded-[20px] overflow-y-scroll scrollbar-none px-5 lg:py-14 py-10 bg-white z-20">
-                <div className="flex justify-start gap-4 items-center">
-                  <CloseSquare
-                    variant="Bold"
-                    color="#302929"
-                    size="32"
-                    className="cursor-pointer hover:scale-110  transition-all"
-                    onClick={() => setShowModal(false)}
-                  />
-                  <p className="lg:text-2xl text-xl text-[#302929]">
-                    Make Payment
-                  </p>
-                </div>
-                <div className="lg:mt-12 mt-6 flex flex-col">
-                  <div className="first flex flex-col border-b-2 border-[#F7F8F7] w-full lg:w-[70%] pb-4 lg:pb-12 justify-start items-start text-start">
-                    <div className="bg-[#FEFAE1] w-full lg:w-[90%] px-5 flex justify-between items-center border-[#D0B61C] text-[#302929]  py-2 border rounded-[14px] text-sm lg:text-xl font-normal">
-                      <p>
-                        Your order only serves for {adult + child}{" "}
-                        {adult + child > 1 ? "persons" : "person"}
+            <Backdrop reservationsuccess={reservationsuccess}>
+              {reservationsuccess ? (
+                <ReservationSuccessModal mealtype={mealType} reservationDetails={reservationDetails} setReservationsuccess={setReservationsuccess} menu={result} />
+              ) : (
+                <div className="lg:w-[80%] w-[95%] mt-28 rounded-[20px] overflow-y-scroll scrollbar-none px-5 lg:py-14 py-10 bg-white z-20">
+                  <div className="flex justify-start gap-4 items-center">
+                    <CloseSquare
+                      variant="Bold"
+                      color="#302929"
+                      size="32"
+                      className="cursor-pointer hover:scale-110  transition-all"
+                      onClick={() => setShowModal(false)}
+                    />
+                    <p className="lg:text-2xl text-xl text-[#302929]">
+                      Make Payment
+                    </p>
+                  </div>
+                  <div className="lg:mt-12 mt-6 flex flex-col">
+                    <div className="first flex flex-col border-b-2 border-[#F7F8F7] w-full lg:w-[70%] pb-4 lg:pb-12 justify-start items-start text-start">
+                      <div className="bg-[#FEFAE1] w-full lg:w-[90%] px-5 flex justify-between items-center border-[#D0B61C] text-[#302929]  py-2 border rounded-[14px] text-sm lg:text-xl font-normal">
+                        <p>
+                          Your order only serves for {adult + child}{" "}
+                          {adult + child > 1 ? "persons" : "person"}
+                        </p>
+                      </div>
+                      <p className="text-[#302929] mt-6 text-lg lg:text-xl font-semibold">
+                        your order
                       </p>
+                      <p className="text-[#302929] mt-3 lg:mt-5 text-base lg:text-xl font-semibold">
+                        {mealType} Buffet
+                      </p>
+                      <span className="text-[#302929] mt-1 text-sm lg:text-base font-normal">
+                        {mealType === "Breakfast"
+                          ? result?.menu?.[0]?.meals?.map((meals, _) => (
+                              <span key={_} className="mx-1">
+                                {meals}
+                              </span>
+                            ))
+                          : mealType === "Lunch"
+                          ? result?.menu?.[1]?.meals?.map((meals, _) => (
+                              <span key={_} className="mx-1">
+                                {meals}
+                              </span>
+                            ))
+                          : mealType === "Dinner"
+                          ? result?.menu?.[2]?.meals?.map((meals, _) => (
+                              <span key={_} className="mx-1">
+                                {meals}
+                              </span>
+                            ))
+                          : null}
+                      </span>
                     </div>
-                    <p className="text-[#302929] mt-6 text-lg lg:text-xl font-semibold">
-                      your order
-                    </p>
-                    <p className="text-[#302929] mt-3 lg:mt-5 text-base lg:text-xl font-semibold">
-                      {mealType} Buffet
-                    </p>
-                    <span className="text-[#302929] mt-1 text-sm lg:text-base font-normal">
-                      {mealType === "Breakfast"
-                        ? result?.menu?.[0]?.meals?.map((meals, _) => (
-                            <span key={_} className="mx-1">
-                              {meals}
-                            </span>
-                          ))
-                        : mealType === "Lunch"
-                        ? result?.menu?.[1]?.meals?.map((meals, _) => (
-                            <span key={_} className="mx-1">
-                              {meals}
-                            </span>
-                          ))
-                        : mealType === "Dinner"
-                        ? result?.menu?.[2]?.meals?.map((meals, _) => (
-                            <span key={_} className="mx-1">
-                              {meals}
-                            </span>
-                          ))
-                        : null}
-                    </span>
                   </div>
-                </div>
-                <div className="mt-7 border-b-2 border-[#F7F8F7] w-full lg:w-[70%] pb-6 lg:pb-12  flex flex-col">
-                  <div className="first flex flex-col justify-start items-start text-start">
-                    <span className=" text-[#302929] text-base lg:text-xl font-semibold">
-                      How would you like to pay
-                    </span>
-                    <div className="mt-2 flex items-center gap-4">
-                      <div
-                        className="w-4 h-4 p-1 flex justify-center items-center border border-[#D0B61C] rounded-full cursor-pointer"
-                        onClick={() => setPaymentType("full")}
-                      >
-                        {paymentType === "full" && (
-                          <div className="w-full h-full rounded-full bg-[#D0B61C]"></div>
-                        )}
+                  <div className="mt-7 border-b-2 border-[#F7F8F7] w-full lg:w-[70%] pb-6 lg:pb-12  flex flex-col">
+                    <div className="first flex flex-col justify-start items-start text-start">
+                      <span className=" text-[#302929] text-base lg:text-xl font-semibold">
+                        How would you like to pay
+                      </span>
+                      <div className="mt-2 flex items-center gap-4">
+                        <div
+                          className="w-4 h-4 p-1 flex justify-center items-center border border-[#D0B61C] rounded-full cursor-pointer"
+                          onClick={() => setPaymentType("full")}
+                        >
+                          {paymentType === "full" && (
+                            <div className="w-full h-full rounded-full bg-[#D0B61C]"></div>
+                          )}
+                        </div>
+                        <div className="flex flex-col items-start justify-start text-start text-[#302929]">
+                          <span className="lg:text-xl text-base font-semibold">
+                            Full payment
+                          </span>
+                          <span className="lg:text-base text-sm font-normal">
+                            Make total payment, you only need to present receipt
+                            at the restaurant
+                          </span>
+                        </div>
                       </div>
-                      <div className="flex flex-col items-start justify-start text-start text-[#302929]">
-                        <span className="lg:text-xl text-base font-semibold">
-                          Full payment
-                        </span>
-                        <span className="lg:text-base text-sm font-normal">
-                          Make total payment, you only need to present receipt
-                          at the restaurant
-                        </span>
-                      </div>
-                    </div>
-                    <div className="mt-2 flex items-center gap-4">
-                      <div
-                        className="w-4 h-4 p-1 flex justify-center items-center border border-[#D0B61C] rounded-full cursor-pointer"
-                        onClick={() => setPaymentType("half")}
-                      >
-                        {paymentType === "half" && (
-                          <div className="w-full h-full rounded-full bg-[#D0B61C]"></div>
-                        )}
-                      </div>
-                      <div className="flex flex-col items-start justify-start text-start text-[#302929]">
-                        <span className="lg:text-xl text-base font-semibold">
-                          Pay part, balance at the restaurant
-                        </span>
-                        <span className="lg:text-base text-sm font-normal">
-                          Make half payment,Balance at the restaurant
-                        </span>
+                      <div className="mt-2 flex items-center gap-4">
+                        <div
+                          className="w-4 h-4 p-1 flex justify-center items-center border border-[#D0B61C] rounded-full cursor-pointer"
+                          onClick={() => setPaymentType("half")}
+                        >
+                          {paymentType === "half" && (
+                            <div className="w-full h-full rounded-full bg-[#D0B61C]"></div>
+                          )}
+                        </div>
+                        <div className="flex flex-col items-start justify-start text-start text-[#302929]">
+                          <span className="lg:text-xl text-base font-semibold">
+                            Pay part, balance at the restaurant
+                          </span>
+                          <span className="lg:text-base text-sm font-normal">
+                            Make half payment,Balance at the restaurant
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="flex border-b-2 border-[#F7F8F7] w-full lg:w-[70%] pb-8 text-start justify-start items-start lg:pb-12  flex-col mt-5">
-                  <div className="text-[#302929] text-base lg:text-xl font-semibold">
-                    Price
-                  </div>
-                  <div className="flex items-center text-start justify-start gap-10 lg:gap-28 w-full">
-                    <div className="font-semibold flex gap-2 mt-3 text-sm lg:text-xl text-[#302929]">
-                      ₦{result?.price_per_adult.toLocaleString()} (adults) x{" "}
-                      {adult} ----- ₦{result?.price_per_child.toLocaleString()}{" "}
-                      (children) x {child}
-                      <div className="font-normal ml-0 lg:ml-3 text-xs lg:text-base text-[#302929]">
-                        per Buffets
+                  <div className="flex border-b-2 border-[#F7F8F7] w-full lg:w-[70%] pb-8 text-start justify-start items-start lg:pb-12  flex-col mt-5">
+                    <div className="text-[#302929] text-base lg:text-xl font-semibold">
+                      Price
+                    </div>
+                    <div className="flex items-center text-start justify-start gap-10 lg:gap-28 w-full">
+                      <div className="font-semibold flex gap-2 mt-3 text-sm lg:text-xl text-[#302929]">
+                        ₦{result?.price_per_adult.toLocaleString()} (adults) x{" "}
+                        {adult} ----- ₦
+                        {result?.price_per_child.toLocaleString()} (children) x{" "}
+                        {child}
+                        <div className="font-normal ml-0 lg:ml-3 text-xs lg:text-base text-[#302929]">
+                          per Buffets
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <h1 className="font-bold mt-5 text-xl">
-                    Total: ₦
-                    {(
-                      result &&
-                      (result?.price_per_adult * adult +
-                        result?.price_per_child * child) /
-                        pay_condition
-                    )?.toLocaleString()}
-                  </h1>
-                  {paymentType === "half" && (
-                    <p className="bg-[#FEFAE1] p-2 mt-3">
-                      Pending amount: ₦
+                    <h1 className="font-bold mt-5 text-xl">
+                      Total: ₦
                       {(
                         result &&
                         (result?.price_per_adult * adult +
                           result?.price_per_child * child) /
                           pay_condition
                       )?.toLocaleString()}
-                    </p>
-                  )}
-                </div>
-                <div className="mt-4 flex flex-col items-start justify-start text-center">
-                  <div className="text-[#302929] text-base lg:text-xl font-semibold">
-                    Pay with
+                    </h1>
+                    {paymentType === "half" && (
+                      <p className="bg-[#FEFAE1] p-2 mt-3">
+                        Pending amount: ₦
+                        {(
+                          result &&
+                          (result?.price_per_adult * adult +
+                            result?.price_per_child * child) /
+                            pay_condition
+                        )?.toLocaleString()}
+                      </p>
+                    )}
                   </div>
-                  <div className="w-36 h-20 mt-5">
-                    <Image src={Paystack} alt="" className="object-cover" />
+                  <div className="mt-4 flex flex-col items-start justify-start text-center">
+                    <div className="text-[#302929] text-base lg:text-xl font-semibold">
+                      Pay with
+                    </div>
+                    <div className="w-36 h-20 mt-5">
+                      <Image src={Paystack} alt="" className="object-cover" />
+                    </div>
                   </div>
+                  <button
+                    type="button"
+                    className="inline-flex mb-4 px-24 mt-5 justify-center rounded-2xl bg-[#2B5F2B]  py-4 hover:scale-105 transition-all text-sm font-normal text-white disabled:opacity-50 disabled:cursor-not-allowed "
+                    onClick={handleResrvation}
+                    disabled={reservationLoading}
+                  >
+                    {reservationLoading ? "Loading..." : "Continue"}
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  className="inline-flex mb-4 px-24 mt-5 justify-center rounded-2xl bg-[#2B5F2B]  py-4 hover:scale-105 transition-all text-sm font-normal text-white disabled:opacity-50 disabled:cursor-not-allowed "
-                  onClick={handleResrvation}
-                  disabled={reservationLoading}
-                >
-                  {reservationLoading ? "Making reservation..." : "Continue"}
-                </button>
-              </div>
+              )}
             </Backdrop>
           )}
         </div>
