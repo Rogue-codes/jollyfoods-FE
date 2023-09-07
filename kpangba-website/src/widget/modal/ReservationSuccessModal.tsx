@@ -70,6 +70,11 @@ export default function ReservationSuccessModal({
         <p className="text-2xl font-normal text-[#302929]">N9,600 per Buffet</p>
       </div>
 
+      <div className="border-b mt-7 border-[#E8EDE8] pb-5 lg:w-[70%] ">
+        <p className="text-base font-normal text-[#302929]">Health Service Provider</p>
+        <p className="text-2xl font-normal text-[#302929]">{kpangba_user?.hmo}</p>
+      </div>
+
       <div className="px-6 py-[14px] border border-[#D0B61C] w-full lg:w-[40%] mt-7 rounded-[14px] bg-[#FEFAE1]">
         <p>
           An email containing your order summary has been sent to{" "}

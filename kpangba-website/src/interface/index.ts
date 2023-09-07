@@ -9,6 +9,7 @@ export interface UserProps {
   name: string;
   phoneNumber: string;
   id: string;
+  hmo:string;
 }
 
 export interface RestaurantType {
