@@ -286,6 +286,7 @@ function CreateAccount() {
               {loading ? "loading...": "Create Account"}
             </button>
           </form>
+          <p className="text-sm mx-auto text-center pb-2">Already have an Account? <span className="text-[#2B5F2B] font-bold"><Link href='/sign-in'>Sign-in</Link></span></p>
         </div>
 
         <div className="bg-[#2B5F2B] hidden lg:block mr-4 pl-14 rounded-xl flex-col items-start text-start justify-start w-1/2">

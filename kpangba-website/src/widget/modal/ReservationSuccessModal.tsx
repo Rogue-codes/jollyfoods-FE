@@ -78,7 +78,10 @@ export default function ReservationSuccessModal({
       </div>
 
       <div className="flex flex-col lg:flex-row justify-start gap-8 mt-12 items-center">
-        <button className="px-6 py-4 bg-[#2B5F2B] rounded-[20px] hover:scale-105 transition-all text-white">
+        <button
+          className="px-6 py-4 bg-[#2B5F2B] rounded-[20px] hover:scale-105 transition-all text-white"
+          onClick={() => setReservationsuccess(false)}
+        >
           Make another reservation
         </button>
         <button
