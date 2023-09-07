@@ -109,6 +109,7 @@ export default function Resturant({ params }: PageProps) {
           number_of_seats: adult + child,
           customer_id: kpangba_user?.id,
           adult: adult,
+          children:child,
           amount:
             result &&
             result?.price_per_adult * adult + result?.price_per_child * child,
