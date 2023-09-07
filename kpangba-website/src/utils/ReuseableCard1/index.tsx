@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 interface containerProps {
     text1?: string;
     text2?: string;
@@ -9,6 +10,7 @@ interface containerProps {
 }
 
 function ReuseableCard1({ text1, text2, text3, img, icon }: containerProps) {
+    const router = useRouter()
     return (
         <div className="flex cursor-pointer gap-4 text-start justify-start items-center rounded-xl">
             <div className='w-[20rem] h-[12rem]'>
@@ -21,7 +23,7 @@ function ReuseableCard1({ text1, text2, text3, img, icon }: containerProps) {
                     {icon} <div>{text3}</div>
                 </div>
                 <div className="w-[50%] flex items-center justify-center text-center bg-[#2B5F2B] px-4 py-3 rounded-2xl">
-                    <button className='text-white font-normal text-base'>Reserve</button>
+                    <button className='text-white font-normal text-base' onClick={()=>router.push('/reservation-result')}>Reserve</button>
                 </div>
             </div>
         </div>

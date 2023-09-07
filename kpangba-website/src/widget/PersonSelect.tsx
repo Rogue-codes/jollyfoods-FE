@@ -7,7 +7,7 @@ export default function  PersonSelect() {
   const [showSelector, setShowSeletor] = useState<boolean>(false);
   return (
     <div
-      className="w-full relative p-[10px] cursor-pointer bg-white rounded-lg"
+      className="w-full relative p-[10px] py-4 lg:py-[10px] cursor-pointer bg-white rounded-lg"
       tabIndex={0}
       onBlur={() => setShowSeletor(false)}
     >

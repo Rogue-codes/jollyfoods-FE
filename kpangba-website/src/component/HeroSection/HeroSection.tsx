@@ -95,15 +95,10 @@ function HeroSection({
       </div>
       <div className="bg-[#FEF8D2] w-full lg:w-[90%] mx-auto flex lg:flex-row flex-wrap lg:flex-nowrap items-center justify-center text-center gap-4 border lg:p-6 px-2 py-6 mt-12 border-[#D0B61B] lg:h-[6.5rem] rounded-3xl">
         {/* Location and Date on mobile */}
-          <div className="w-[45%] lg:w-[40%]">
-            <CustomSelect
-              icon={<Location size="19" variant="Linear" color="#302929" />}
-              className="!w-full cursor-pointer rounded-lg h-6"
-              options={optionsArr}
-              onChange={setLocation}
-              label="Location"
-              value={location}
-            />
+          <div className="w-[45%] p-[10px] rounded-lg  bg-white lg:w-[40%]">
+            <div className="w-full h-6 bg-white flex justify-center items-center">
+              <p>Lagos</p>
+            </div>
           </div>
           <div className="w-[45%] lg:w-[30%]">
             <DateSelect

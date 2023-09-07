@@ -31,11 +31,17 @@ function ReservationResult() {
     {
       label: "Yaba",
       value: "Yaba",
-    }
+    },
   ];
 
-  const { reservationDate, setReservationDate, location, setLocation, reservationTime, handleTimeChange } =
-    useAuth();
+  const {
+    reservationDate,
+    setReservationDate,
+    location,
+    setLocation,
+    reservationTime,
+    handleTimeChange,
+  } = useAuth();
 
   const router = useRouter();
 
@@ -49,14 +55,13 @@ function ReservationResult() {
     }
   }, []);
 
-
-  const filteredResturant = restaurant?.filter((rst:RestaurantType)=>{
-    if(!location?.value){
-      return rst
-    }else{
-      return rst.location_name === location?.value
+  const filteredResturant = restaurant?.filter((rst: RestaurantType) => {
+    if (!location?.value) {
+      return rst;
+    } else {
+      return rst.location_name === location?.value;
     }
-  })
+  });
   return (
     <div className="flex min-h-screen flex-col">
       <NavBar />
@@ -64,16 +69,10 @@ function ReservationResult() {
         <div className="bg-[#FEF8D2] w-full lg:flex lg:flex-row flex-col items-center justify-center text-center gap-4 border lg:p-6 px-2 py-6  border-[#D0B61B] lg:h-[6.5rem] rounded-3xl">
           {/* Location and Date on mobile */}
           <div className="w-[100%] flex items-center gap-2 lg:gap-4">
-            <div className="w-[50%]">
-              <CustomSelect
-                // hideDropDownIcon
-                icon={<Location size="19" variant="Linear" color="#302929" />}
-                className="!w-full cursor-pointer rounded-lg h-6"
-                options={optionsArr}
-                onChange={setLocation}
-                label="Location"
-                value={location}
-              />
+            <div className="w-[50%] p-[10px] rounded-lg  bg-white lg:w-[50%]">
+              <div className="w-full h-6 bg-white flex justify-center items-center">
+                <p>Lagos</p>
+              </div>
             </div>
             <div className="w-[50%]">
               <DateSelect
@@ -94,7 +93,7 @@ function ReservationResult() {
                 type="time"
                 value={reservationTime}
                 onChange={handleTimeChange}
-                className="w-full lg:px-2 px-3 lg:py-2.5 py-6 rounded-lg"
+                className="w-full lg:px-2 px-3 lg:py-2.5 py-3 rounded-lg"
                 name=""
                 id=""
               />
@@ -137,7 +136,9 @@ function ReservationResult() {
           </div>
           <div className="border"></div>
           <div className="">
-            <div className="text-[#302929] font-semibold text-sm lg:text-xl">Region</div>
+            <div className="text-[#302929] font-semibold text-sm lg:text-xl">
+              Region
+            </div>
             <div className="mt-2 flex gap-4">
               <input type="radio" />
               <label className="lg:text-base text-sm font-normal text-[#302929]">
@@ -154,7 +155,8 @@ function ReservationResult() {
         </div>
         <div className="second flex flex-col gap-4 lg:w-[56.7rem] w-full">
           <p className="bg-[#FEF8D2] mt-5 mb-2 text-sm lg:text-2xl font-semibold text-[#302929] items-center text-center justify-center rounded-lg border border-[#D0B61B] lg:w-[28rem] w-full py-3">
-            <strong>{filteredResturant?.length}</strong> Kpangba food on wheels in  { location ? location.value : "Lagos"}
+            <strong>{filteredResturant?.length}</strong> Kpangba food on wheels
+            in {location ? location.value : "Lagos"}
           </p>
           <div className="border"></div>
           <div className="lg:w-[55rem] w-full rounded-xl shadow-lg lg:px-8 px-2 py-8 lg:py-12 flex flex-col lg:gap-8 gap-7 bg-white">
