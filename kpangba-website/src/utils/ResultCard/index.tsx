@@ -29,7 +29,7 @@ function ResultCard({ item }: containerProps) {
           </div>
         </div>
         <span className="lg:text-base text-sm font-normal lg:w-[30rem] w-[15rem]">
-          Kfw Ikeja is located at {item.location_meta?.address}
+          {item.location_meta?.address}
         </span>
         <div className="flex flex-wrap mb-4 lg-mb-0 lg:gap-4 gap-3">
           <div className="flex gap-4 lg:p-2 p-1 items-center justify-center text-center bg-[#FEFAE1] rounded-3xl">
