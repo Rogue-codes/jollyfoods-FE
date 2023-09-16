@@ -13,18 +13,18 @@ export const Locations = [
       number: "4.0"
     },
     {
-      name: "Kpangba Ikeja",
-      subname: "Kfw Ikeja is located at Adekunle fajuyi way",
+      name: "Kpangba Yaba",
+      subname: "Kfw Yaba is located at Adekunle fajuyi way",
       number: "4.0"
     },
     {
-      name: "Kpangba Ikeja",
-      subname: "Kfw Ikeja is located at Adekunle fajuyi way",
+      name: "Kpangba Festac",
+      subname: "Kfw Festac is located at Adekunle fajuyi way",
       number: "4.0"
     },
     {
-      name: "Kpangba Ikeja",
-      subname: "Kfw Ikeja is located at Adekunle fajuyi way",
+      name: "Kpangba Gbagada",
+      subname: "Kfw Gbagada is located at Adekunle fajuyi way",
       number: "4.0"
     },
      
@@ -67,7 +67,8 @@ export const Locations = [
       name: "Kpangba Basic",
       subname: "Premium",
       reward1: "Buffet Package",
-      reward2: "Choose health care service"
+      reward2: "Choose health care service",
+      reward3: "Eat all you can"
     },
     {
       name: "Kpangba +",
