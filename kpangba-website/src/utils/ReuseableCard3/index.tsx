@@ -10,7 +10,7 @@ interface containerProps {
 }
 function ReuseableCard3({ text1, text2, text3, text4, text5 }: containerProps) {
     return (
-        <div className='flex flex-col items-start text-start w-[18rem] mb-16  justify-start'>
+        <div className='flex flex-col items-center text-center w-[18rem] lg:mb-16 mb-8 justify-start'>
             <div className=''>
                 <div className='flex pt-10 pb-8 flex-col items-center text-center justify-center rounded-t-xl border-t-2 border-l-2 border-r-2 border-[#B8CAB8] bg-[#E8EDE8]'>
                     <span className='font-bold text-xl text-[#302929]'>{text1}</span>
