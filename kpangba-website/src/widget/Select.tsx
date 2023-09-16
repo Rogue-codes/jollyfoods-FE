@@ -7,10 +7,8 @@ import Select, { StylesConfig, Props } from "react-select";
 import { ArrowDown2, Location } from "iconsax-react";
 
 export interface OptionProps {
-  value: any;
+  value: string;
   label: string;
-  icon?: JSX.Element;
-  id?: String;
 }
 
 interface SelectProps {
@@ -18,7 +16,7 @@ interface SelectProps {
   label?: string;
   height?: string;
   width?: string;
-  options: OptionProps[];
+  options: OptionProps[] | undefined;
   onChange?:
     | React.Dispatch<React.SetStateAction<OptionProps | null>>
     | React.Dispatch<React.SetStateAction<number>>;
@@ -171,11 +169,6 @@ export default function CustomSelect({
                 textSmall ? "text-sm" : "text-md"
               } ${!textWhite ? "text-black" : "text-white"}`}
             >
-              {hideOptionIcons ? (
-                e.icon || <Location size="32" color="#FF8A65" variant="Bold" />
-              ) : (
-                <></>
-              )}
               {e.label}
             </p>
           );

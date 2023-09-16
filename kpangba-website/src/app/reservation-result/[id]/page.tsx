@@ -102,18 +102,19 @@ export default function Resturant({ params }: PageProps) {
       if (!kpangba_user) {
         router.push("/create-account");
       } else {
-        const res = await ApiFetcher.post("/reservation/create", {
-          resturant_id: result?._id,
-          booked_date: reservationDate,
-          booked_time: reservationTime,
-          number_of_seats: adult + child,
-          customer_id: kpangba_user?.id,
-          adult: adult,
-          children:child,
+        const res = await ApiFetcher.post("/paystack/initiate-payment", {
+          // resturant_id: result?._id,
+          // booked_date: reservationDate,
+          // booked_time: reservationTime,
+          // number_of_seats: adult + child,
+          // customer_id: kpangba_user?.id,
+          // adult: adult,
+          // children:child,
           amount:
             result &&
             result?.price_per_adult * adult + result?.price_per_child * child,
-          payment_type: paymentType,
+          // payment_type: paymentType,
+          email:kpangba_user.email
         });
         toast.success(res?.data?.message);
         setReservationLoading(false);

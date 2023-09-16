@@ -1,38 +1,17 @@
 "use client";
-import { RestaurantPic } from "@/assets";
 import NavBar from "@/component/NavBar/NavBar";
 import { useAuth } from "@/context/AuthContext";
-import { OptionProps, RestaurantType } from "@/interface";
-import { locationResult } from "@/json/StaticData";
+import { RestaurantType } from "@/interface";
 import ResultCard from "@/utils/ResultCard";
 import DateSelect from "@/widget/DateSelect";
 import PersonSelect from "@/widget/PersonSelect";
 import CustomSelect from "@/widget/Select";
-import { Clock, Location, Star1, User } from "iconsax-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 function ReservationResult() {
   const [restaurant, setRestaurant] = useState<RestaurantType[] | null>(null);
-  const optionsArr: OptionProps[] = [
-    {
-      label: "Ikeja",
-      value: "Ikeja",
-    },
-    {
-      label: "Festac",
-      value: "Festac",
-    },
-    {
-      label: "Surulere",
-      value: "Surulere",
-    },
-    {
-      label: "Yaba",
-      value: "Yaba",
-    },
-  ];
 
   const {
     reservationDate,
@@ -41,6 +20,7 @@ function ReservationResult() {
     setLocation,
     reservationTime,
     handleTimeChange,
+    OptionsArr
   } = useAuth();
 
   const router = useRouter();
@@ -70,9 +50,12 @@ function ReservationResult() {
           {/* Location and Date on mobile */}
           <div className="w-[100%] flex items-center gap-2 lg:gap-4">
             <div className="w-[50%] p-[10px] rounded-lg  bg-white lg:w-[50%]">
-              <div className="w-full h-6 bg-white flex justify-center items-center">
-                <p>Lagos</p>
-              </div>
+              <CustomSelect
+                label="location"
+                value={location}
+                onChange={(e: any) => setLocation(e)}
+                options={OptionsArr}
+              />
             </div>
             <div className="w-[50%]">
               <DateSelect

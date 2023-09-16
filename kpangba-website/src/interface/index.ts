@@ -1,6 +1,13 @@
-export interface OptionProps {
-  label: string;
-  value: string;
+export interface LocationType {
+  _id: "650571d4d48a3783846bd039",
+  name: "Ikeja",
+  region_id: "6505715dd48a3783846bd033",
+  state: "Lagos",
+}
+
+export interface OptionType{
+  value: string
+  label: string
 }
 
 export interface UserProps {

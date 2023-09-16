@@ -1,5 +1,6 @@
 "use client";
-import { OptionProps, UserProps } from "@/interface";
+import { LocationType, OptionType, UserProps } from "@/interface";
+import ApiFetcher from "@/utils/api/ApiFetcher";
 import { logoutAuth } from "@/utils/api/auth";
 import { formatTime } from "@/utils/time";
 import {
@@ -23,10 +24,11 @@ interface AuthContextType {
   adult: number;
   reservationDate: Date | null;
   setReservationDate: Dispatch<SetStateAction<Date | null>>;
-  location: OptionProps | null;
-  setLocation: Dispatch<SetStateAction<OptionProps | null>>;
   reservationTime: string;
   handleTimeChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  OptionsArr: OptionType[] | undefined;
+  location: OptionType | null;
+  setLocation: Dispatch<SetStateAction<OptionType | null>>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -45,7 +47,34 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [adult, setAdult] = useState<number>(1);
   const [child, setChildren] = useState<number>(0);
   const [reservationDate, setReservationDate] = useState<Date | null>(null);
-  const [location, setLocation] = useState<OptionProps | null>(null);
+  const [locations, setLocations] = useState<LocationType[] | null>(
+    typeof window !== "undefined" && localStorage.getItem("jolly_location")
+      ? JSON.parse(window.localStorage.getItem("jolly_location")!)
+      : null
+  );
+
+  const [location, setLocation] = useState<OptionType | null>(null);
+
+  // fetch locations
+  const getLocations = async () => {
+    try {
+      const res = await ApiFetcher.get("/location/all");
+      setLocations(res?.data?.data);
+      typeof window !== "undefined" &&
+        localStorage.setItem("jolly_location", JSON.stringify(res?.data?.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  console.log(location);
+
+  const OptionsArr: OptionType[] | undefined = locations?.map((item) => ({
+    value: item.name,
+    label: item.name,
+  }));
+
+  console.log(OptionsArr);
 
   function getDefaultTime(): string {
     const now = new Date();
@@ -82,6 +111,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       // If it's before 6 PM, set the reservationDate to today at 6 PM
       setReservationDate(now);
     }
+
+    getLocations();
   }, []);
 
   // handle time change
@@ -125,10 +156,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
     handleDecrement,
     reservationDate,
     setReservationDate,
-    location,
-    setLocation,
     reservationTime,
     handleTimeChange,
+    OptionsArr,
+    location,
+    setLocation
   };
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>

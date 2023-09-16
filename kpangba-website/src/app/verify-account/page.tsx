@@ -78,7 +78,7 @@ function VerifyLoginPage() {
             className="mt-10"
             onSubmit={(e: React.FormEvent<HTMLFormElement>) => verifyUser(e)}
           >
-            <OtpInput value={otp} valueLength={4} onChange={onChange} />
+            <OtpInput value={otp} valueLength={6} onChange={onChange} />
             <div className="flex gap-14 mt-12 items-start text-center justify-start">
               <span className="text-[#2B5F2B] text-sm lg:text-base font-normal cursor-pointer">
                 Resend code
